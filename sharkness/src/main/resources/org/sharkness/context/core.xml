@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jms="http://www.springframework.org/schema/jms" xmlns:lang="http://www.springframework.org/schema/lang"
+	xmlns:sec="http://www.springframework.org/schema/security" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/jms http://www.springframework.org/schema/jms/spring-jms.xsd
+		http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang.xsd
+		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.1.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+	<!-- Loading Annotation and Scan Support -->
+	
+	<context:annotation-config />
+
+	<context:component-scan base-package="." use-default-filters="true" />
+
+	<!-- Loading Sharkness Configurations -->
+	
+	<bean id="propertiesPlaceholder" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer" lazy-init="false">
+		<property name="properties">
+			<bean class="org.sharkness.business.factory.PropertiesFactory" factory-method="getSharknessProperties" />
+		</property>
+	</bean>
+	
+	<bean id="applicationEntities" class="org.sharkness.business.factory.ModelFactory" factory-method="getSharknessHibernateEntities" />
+	<bean id="jdbcUrl" class="org.sharkness.business.factory.PropertiesFactory" factory-method="getDatabaseJdbcUrl"/>
+	<bean id="driverClass" class="org.sharkness.business.factory.PropertiesFactory" factory-method="getDatabaseDriverClass"/>
+	<bean id="user" class="org.sharkness.business.factory.PropertiesFactory" factory-method="getDatabaseUser"/>
+	<bean id="password" class="org.sharkness.business.factory.PropertiesFactory" factory-method="getDatabasePassword"/>
+	<bean id="initialPoolSize" class="org.sharkness.business.factory.PropertiesFactory" factory-method="getDatabaseInitialPoolSize"/>
+	<bean id="maxPoolSize" class="org.sharkness.business.factory.PropertiesFactory" factory-method="getDatabaseMaxPoolSize"/>
+	<bean id="hibernateProperties" class="org.sharkness.business.factory.PropertiesFactory" factory-method="getHibernateProperties"/>
+
+	<!-- Loading Sharkness Security Aspects -->
+
+	<sec:authentication-manager alias="authenticationManager">
+		<sec:authentication-provider user-service-ref="customUserService">
+			<sec:password-encoder ref="passwordEncoder" />
+		</sec:authentication-provider>
+	</sec:authentication-manager>
+
+	<bean id="remoteAuthenticationManager" class="org.springframework.security.authentication.rcp.RemoteAuthenticationManagerImpl">
+		<property name="authenticationManager" ref="authenticationManager"></property>
+	</bean>
+
+	<bean id="authRemoteService" class="org.sharkness.remoting.service.impl.AuthRemoteServiceImpl">
+		<constructor-arg ref="remoteAuthenticationManager" />
+	</bean>
+
+	<bean id="customUserService" class="org.sharkness.web.authority.CustomUserDetailsService" />
+
+	<bean class="org.sharkness.web.authority.IncorrectPasswordEventListener" />
+
+	<bean class="org.springframework.security.access.event.LoggerListener" />
+
+	<bean class="org.springframework.security.authentication.event.LoggerListener" />
+
+</beans>
