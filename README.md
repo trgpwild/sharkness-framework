@@ -1,4 +1,8 @@
 sharkness-framework
 ===================
 
-Framework (baseada em spring framework, hibernate, primefaces e maven) de apoio a criaÃ§Ã£o de aplicaÃ§Ãµes com gerador de cÃ³digo-fonte (CRUD COMPLETO)
+Framework de apoio a criação de aplicações com gerador de código-fonte.
+
+Baseada em spring framework, hibernate, primefaces e maven.
+
+Suporte a CRUD, Autenticação com Spring Security e Spring Remote (HttpInvoker)
