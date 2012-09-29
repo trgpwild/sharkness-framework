@@ -1,0 +1,76 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/template/system.xhtml">
+	<ui:param name="panelTitle" value="#{i18n['model.usuario.panel.title']}" />
+	<ui:define name="content">
+		<h:form prependId="false">
+			<p align="right" style="margin: 0px;">
+				<p:commandButton actionListener="#{usuarioController.prepareAddModel}"
+					value="#{i18n['model.usuario.table.new']}" update="usuarioForm" oncomplete="dialogGerUsuario.show()" />
+			</p><hr/>
+			<p:dataTable id="table" var="usuario" value="#{usuarioController.listDataModel}"
+				paginator="true" rows="10" paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}">
+				<p:column headerText="#{i18n['model.usuario.property.username']}" id="username" sortBy="#{usuario.username}" filterBy="#{usuario.username}">  
+					#{usuario.username}
+				</p:column>
+				<p:column headerText="#{i18n['model.usuario.property.email']}" id="email" sortBy="#{usuario.email}" filterBy="#{usuario.email}">  
+					#{usuario.email}
+				</p:column>
+				<p:column headerText="#{i18n['model.usuario.property.tries']}" id="tries" sortBy="#{usuario.tries}" filterBy="#{usuario.tries}">  
+					#{usuario.tries}
+				</p:column>
+				<p:column>
+					<f:facet name="header"><h:outputText value="#{i18n['global.table.edit']}"/></f:facet>
+					<p:commandLink value="#{i18n['global.table.edit']}" update="usuarioForm"
+						actionListener="#{usuarioController.prepareEditModel}"
+						oncomplete="dialogGerUsuario.show()" />
+				</p:column>
+				<p:column>
+					<f:facet name="header"><h:outputText value="#{i18n['global.table.delete']}"/></f:facet>
+					<p:commandLink actionListener="#{usuarioController.selectModel}" onclick="deleteConfirm.show()" value="#{i18n['global.table.delete']}"/>
+				</p:column>
+			</p:dataTable>
+			<p:confirmDialog id="deleteConfirm" message="#{i18n['global.confirmation.delete']}" header="#{i18n['global.table.delete']}" severity="alert" widgetVar="deleteConfirm">
+				<p:commandButton id="confirm" value="#{i18n['global.yes.label']}" update="table,messages" oncomplete="deleteConfirm.hide()" actionListener="#{usuarioController.deleteModel}" />
+				<p:commandButton id="decline" value="#{i18n['global.no.label']}" onclick="deleteConfirm.hide()" type="button" /> 
+			</p:confirmDialog>
+		</h:form>
+		<p:dialog header="#{i18n['model.usuario.form.title']}" widgetVar="dialogGerUsuario" resizable="false" modal="true" showEffect="fade">
+			<h:form prependId="false">
+				<h:panelGrid id="usuarioForm" columns="3" style="margin-bottom:10px">
+					<h:outputLabel for="username" value="#{i18n['model.usuario.property.username']}"/>
+					<p:inputText id="username" value="#{usuarioController.model.username}" label="#{i18n['model.usuario.property.username']}"/>
+					<p:message for="username" display="icon"/>
+					<h:outputLabel for="password" value="#{i18n['model.usuario.property.password']}"/>
+					<p:password id="password" value="#{usuarioController.model.password}" label="#{i18n['model.usuario.property.password']}" inline="true"/>
+					<p:message for="password" display="icon"/>
+					<h:outputLabel for="email" value="#{i18n['model.usuario.property.email']}"/>
+					<p:inputText id="email" value="#{usuarioController.model.email}" label="#{i18n['model.usuario.property.email']}"/>
+					<p:message for="email" display="icon"/>
+					<h:outputLabel for="ativo" value="#{i18n['model.usuario.property.ativo']}"/>
+					<p:selectBooleanCheckbox id="ativo" value="#{usuarioController.model.ativo}" label="#{i18n['model.usuario.property.ativo']}"/>
+					<p:message for="ativo" display="icon"/>
+					<h:outputLabel for="tries" value="#{i18n['model.usuario.property.tries']}"/>
+					<p:inputText id="tries" value="#{usuarioController.model.tries}" label="#{i18n['model.usuario.property.tries']}"/>
+					<p:message for="tries" display="icon"/>
+					<h:outputLabel for="roles" value="#{i18n['model.usuario.property.roles']}"/>
+					<p:selectManyMenu id="roles" value="#{usuarioController.model.roles}" label="#{i18n['model.usuario.property.roles']}" collectionType="java.util.HashSet" style="height:60px">
+						<f:selectItems value="#{perfilController.listModel}"/>
+						<f:converter converterId="simpleModelConverter"/>
+					</p:selectManyMenu>
+					<p:message for="roles" display="icon"/>
+				</h:panelGrid>
+				<h:panelGrid>
+					<p:commandButton update="table,messages,usuarioForm" value="#{i18n['global.table.save']}"
+						actionListener="#{usuarioController.saveModel}"/>
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+	</ui:define>
+</ui:composition>
+</html>
