@@ -99,10 +99,4 @@
 			<layout>default</layout>
 		</repository>
 	</repositories>
-	<distributionManagement>
-		<repository>
-			<id>github.repo</id>
-			<url>file:///Users/IBM_ADMIN/git/sharkness-framework/repository</url>
-		</repository>
-	</distributionManagement>
 </project>
