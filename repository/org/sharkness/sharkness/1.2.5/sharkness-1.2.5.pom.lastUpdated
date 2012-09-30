@@ -1,0 +1,16 @@
+#NOTE: This is an internal implementation file, its format can be changed without prior notice.
+#Sun Sep 30 04:50:14 BRT 2012
+http\://repository.jboss.org/nexus/content/groups/public-jboss/.error=
+http\://repository.jboss.org/nexus/content/groups/public-jboss/.lastUpdated=1348989274116
+http\://repository.primefaces.org/.error=
+http\://repo.maven.apache.org/maven2/.lastUpdated=1348989278747
+http\://repository.jboss.com/maven2/.error=Could not transfer artifact org.sharkness\:sharkness\:pom\:1.2.5 from/to hibernate-support (http\://repository.jboss.com/maven2/)\: Access denied to http\://repository.jboss.com/maven2/org/sharkness/sharkness/1.2.5/sharkness-1.2.5.pom. Error code 403, Forbidden
+https\://raw.github.com/trgpwild/sharkness-framework/master/repository/.lastUpdated=1348989273452
+http\://spring-security-facelets-taglib.googlecode.com/svn/repo/.lastUpdated=1348989277896
+http\://repo.maven.apache.org/maven2/.error=
+http\://maven.springframework.org/milestone/.lastUpdated=1348989276270
+default-http\://repository.jboss.com/maven2/.lastUpdated=1348991414120
+https\://raw.github.com/trgpwild/sharkness-framework/master/repository/.error=
+http\://spring-security-facelets-taglib.googlecode.com/svn/repo/.error=
+http\://maven.springframework.org/milestone/.error=
+http\://repository.primefaces.org/.lastUpdated=1348989277171
