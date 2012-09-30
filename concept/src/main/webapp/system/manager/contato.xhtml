@@ -1,0 +1,58 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/template/system.xhtml">
+	<ui:param name="panelTitle" value="#{i18n['model.contato.panel.title']}" />
+	<ui:define name="content">
+		<h:form prependId="false">
+			<p align="right" style="margin: 0px;">
+				<p:commandButton actionListener="#{contatoController.prepareAddModel}"
+					value="#{i18n['model.contato.table.new']}" update="contatoForm" oncomplete="dialogGerContato.show()" />
+			</p><hr/>
+			<p:dataTable id="table" var="contato" value="#{contatoController.listDataModel}"
+				paginator="true" rows="10" paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}">
+				<p:column headerText="#{i18n['model.contato.property.nome']}" id="nome" sortBy="#{contato.nome}" filterBy="#{contato.nome}">  
+					#{contato.nome}
+				</p:column>
+				<p:column headerText="#{i18n['model.contato.property.endereco']}" id="endereco" sortBy="#{contato.endereco}" filterBy="#{contato.endereco}">  
+					#{contato.endereco}
+				</p:column>
+				<p:column>
+					<f:facet name="header"><h:outputText value="#{i18n['global.table.edit']}"/></f:facet>
+					<p:commandLink value="#{i18n['global.table.edit']}" update="contatoForm"
+						actionListener="#{contatoController.prepareEditModel}"
+						oncomplete="dialogGerContato.show()" />
+				</p:column>
+				<p:column>
+					<f:facet name="header"><h:outputText value="#{i18n['global.table.delete']}"/></f:facet>
+					<p:commandLink actionListener="#{contatoController.selectModel}" onclick="deleteConfirm.show()" value="#{i18n['global.table.delete']}"/>
+				</p:column>
+			</p:dataTable>
+			<p:confirmDialog id="deleteConfirm" message="#{i18n['global.confirmation.delete']}" header="#{i18n['global.table.delete']}" severity="alert" widgetVar="deleteConfirm">
+				<p:commandButton id="confirm" value="#{i18n['global.yes.label']}" update="table,messages" oncomplete="deleteConfirm.hide()" actionListener="#{contatoController.deleteModel}" />
+				<p:commandButton id="decline" value="#{i18n['global.no.label']}" onclick="deleteConfirm.hide()" type="button" /> 
+			</p:confirmDialog>
+		</h:form>
+		<p:dialog header="#{i18n['model.contato.form.title']}" widgetVar="dialogGerContato" resizable="false" modal="true" showEffect="fade">
+			<h:form prependId="false">
+				<h:panelGrid id="contatoForm" columns="3" style="margin-bottom:10px">
+					<h:outputLabel for="nome" value="#{i18n['model.contato.property.nome']}"/>
+					<p:inputText id="nome" value="#{contatoController.model.nome}" label="#{i18n['model.contato.property.nome']}"/>
+					<p:message for="nome" display="icon"/>
+					<h:outputLabel for="endereco" value="#{i18n['model.contato.property.endereco']}"/>
+					<p:inputText id="endereco" value="#{contatoController.model.endereco}" label="#{i18n['model.contato.property.endereco']}"/>
+					<p:message for="endereco" display="icon"/>
+				</h:panelGrid>
+				<h:panelGrid>
+					<p:commandButton update="table,messages,contatoForm" value="#{i18n['global.table.save']}"
+						actionListener="#{contatoController.saveModel}"/>
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+	</ui:define>
+</ui:composition>
+</html>
