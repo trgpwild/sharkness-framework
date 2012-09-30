@@ -100,4 +100,11 @@
 			<layout>default</layout>
 		</repository>
 	</repositories>
+	<distributionManagement>
+		<repository>
+			<id>org.sharkness</id>
+			<name>Sharkness Repository</name>
+			<url>file:///Users/thiagorobertogasparpinto/Documents/workspace/sharkness-framework/repository</url>
+		</repository>
+	</distributionManagement>
 </project>
