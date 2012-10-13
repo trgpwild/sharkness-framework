@@ -1,5 +1,8 @@
 package org.sharkness.business.factory;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -15,7 +18,21 @@ public class PropertiesFactory {
 	private static Properties cfg;
 	
 	private InputStream getSharknessInputStream(String propFileName) {
-        return this.getClass().getClassLoader().getResourceAsStream(propFileName);
+		InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream(propFileName);
+		if (inputStream != null) {
+			return inputStream;
+		} else {
+			try {
+				return new FileInputStream(new File(
+					new StringBuilder("./").append(getApplicationDevResources())
+						.append("/").append(propFileName).toString()
+				));
+			} catch (FileNotFoundException e) {
+				return null;
+			} catch (Exception e) {
+				return null;
+			}
+		}
 	}
 	
 	public static Properties getSharknessProperties() {

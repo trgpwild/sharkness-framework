@@ -5,6 +5,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 
+import org.sharkness.artifacts.annotation.Generator;
 import org.sharkness.business.entity.Model;
 import org.sharkness.business.entity.User;
 import org.sharkness.business.factory.ModelFactory;
@@ -64,6 +65,7 @@ public class SharknessGenerator extends WebContentGenerator {
 		createServiceArtifact(klassModel);
 	}
 	
+	@Generator
 	public static void createArtifacts() throws Exception {
 		createBusinessArtifacts();
 		createViewArtifacts();
@@ -102,6 +104,7 @@ public class SharknessGenerator extends WebContentGenerator {
 		fileWriter.flush();
 	}
 
+	@Generator
 	public static void createResourceBundle() throws Exception {
 		String i18nFilename = PropertiesFactory.getApplicationI18nFilename();
 		List<String> options = PropertiesFactory.getApplicationI18nOptions();
@@ -130,6 +133,7 @@ public class SharknessGenerator extends WebContentGenerator {
 		}
 	}
 	
+	@Generator
 	public static void createBusinessArtifacts() throws Exception {
 		WebContentGenerator.createServerConfigContent();
 		createDaoArtifacts();
@@ -144,6 +148,7 @@ public class SharknessGenerator extends WebContentGenerator {
 		JsfViewGenerator.createJsfViewComponent(klassModel);
 	}
 	
+	@Generator
 	public static void createViewArtifacts() throws Exception {
 		createControllerArtifacts();
 		for (String modelName : ScannerClass.getListNamesOfModelPackage()) {
@@ -151,6 +156,7 @@ public class SharknessGenerator extends WebContentGenerator {
 		}
 	}
 	
+	@Generator
 	public static void createControllerArtifacts() throws Exception {
 		for (String modelName : ScannerClass.getListNamesOfModelPackage()) {
 			createControllerArtifact(getSimpleModelName(modelName));
@@ -169,10 +175,12 @@ public class SharknessGenerator extends WebContentGenerator {
 		}
 	}
 	
+	@Generator
 	public static void createWebContent() throws Exception {
 		WebContentGenerator.createWebContent();
 	}
 	
+	@Generator
 	public static void createDaoArtifacts() throws Exception {
 		for (String modelName : ModelFactory.getSharknessHibernateEntities()) {
 			createDaoArtifact(getSimpleModelName(modelName));
@@ -187,6 +195,7 @@ public class SharknessGenerator extends WebContentGenerator {
 		BusinessGenerator.createBusinessComponent(klassModel.getSimpleName(), Template.Dao);
 	}
 	
+	@Generator
 	public static void createConverterArtifacts() throws Exception {
 		for (String modelName : ScannerClass.getListNamesOfModelPackage()) {
 			createConverterArtifact(getSimpleModelName(modelName));
@@ -201,6 +210,7 @@ public class SharknessGenerator extends WebContentGenerator {
 		BusinessGenerator.createBusinessComponent(klassModel.getSimpleName(), Template.Converter);
 	}
 	
+	@Generator
 	public static void createServiceArtifacts() throws Exception {
 		for (String modelName : ScannerClass.getListNamesOfModelPackage()) {
 			createServiceArtifact(getSimpleModelName(modelName));
@@ -216,64 +226,79 @@ public class SharknessGenerator extends WebContentGenerator {
 		BusinessGenerator.createBusinessComponent(klassModel.getSimpleName(), Template.ServiceImpl);
 	}
 	
+	@Generator
 	public static void copyTemplateController() throws Exception {
 		TemplateCopy.copyTemplate("Controller.ftl");
 		TemplateCopy.copyTemplate("UserController.ftl");
 	}
 	
+	@Generator
 	public static void copyTemplateConverter() throws Exception {
 		TemplateCopy.copyTemplate("Converter.ftl");
 	}
 	
+	@Generator
 	public static void copyTemplateCrudView() throws Exception {
 		TemplateCopy.copyTemplate("CrudView.ftl");
 	}
 	
+	@Generator
 	public static void copyTemplateDao() throws Exception {
 		TemplateCopy.copyTemplate("Dao.ftl");
 	}
 	
+	@Generator
 	public static void copyTemplateService() throws Exception {
 		TemplateCopy.copyTemplate("Service.ftl");
 		TemplateCopy.copyTemplate("ServiceImpl.ftl");
 	}
 	
+	@Generator
 	public static void copyTemplateSimpleXhtml() throws Exception {
 		TemplateCopy.copyTemplate("/web/template/simple.xhtml.ftl");
 	}
 	
+	@Generator
 	public static void copyTemplateSystemXhtml() throws Exception {
 		TemplateCopy.copyTemplate("/web/template/system.xhtml.ftl");
 	}
 	
+	@Generator
 	public static void copyTemplateToolbarXhtml() throws Exception {
 		TemplateCopy.copyTemplate("/web/template/toolbar.xhtml.ftl");
 	}
 	
+	@Generator
 	public static void copyTemplateApplicationContext() throws Exception {
 		TemplateCopy.copyTemplate("/web/web-inf/applicationContext.xml.ftl");
 	}
 	
+	@Generator
 	public static void copyTemplateServiceServlet() throws Exception {
 		TemplateCopy.copyTemplate("/web/web-inf/service-servlet.xml.ftl");
 	}
 	
+	@Generator
 	public static void copyTemplateWebXml() throws Exception {
 		TemplateCopy.copyTemplate("/web/web-inf/web.xml.ftl");
 	}
 	
+	@Generator
 	public static void copyContextCore() throws Exception {
 		TemplateCopy.copyContext("core.xml");
 	}
 
+	@Generator
 	public static void copyContextDatabase() throws Exception {
 		TemplateCopy.copyContext("database.xml");
 	}
 
+	@Generator
 	public static void copyContextSecurity() throws Exception {
 		TemplateCopy.copyContext("security.xml");
 	}
 
+	@Generator
 	public static void copyContextSharkness() throws Exception {
 		TemplateCopy.copyContext("sharkness.xml");
 	}

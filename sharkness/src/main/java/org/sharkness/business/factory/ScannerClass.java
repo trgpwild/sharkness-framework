@@ -9,10 +9,11 @@ import java.util.Enumeration;
 import java.util.List;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
+import java.util.regex.Pattern;
 
 public class ScannerClass {
 
-	public static List<String> getClassNamesFromPackage(String packageName) throws IOException {
+	private static List<String> getClassNamesFromPackage(String packageName) throws IOException {
 	    ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
 	    URL packageURL;
 	    List<String> names = new ArrayList<String>();
@@ -58,9 +59,38 @@ public class ScannerClass {
 	
 	public static List<String> getListNamesOfModelPackage() {
 		try {
-			return ScannerClass.getClassNamesFromPackage(PropertiesFactory.getModelPackage());
+			List<String> list = ScannerClass.getClassNamesFromPackage(PropertiesFactory.getModelPackage());
+			if (list != null && list.size() > 0) {
+				return list;
+			} else {
+				throw new Exception();
+			}
 		} catch (Exception e) {
-			return new ArrayList<String>();
+			try {
+				List<String> list = new ArrayList<String>();
+				String fileEntitiesPath = null;
+				try {
+					fileEntitiesPath = new StringBuilder(".").append("/")
+						.append(PropertiesFactory.getApplicationDevSrc())
+						.append("/").append(PropertiesFactory.getModelPackage()
+							.replaceAll(Pattern.quote("."), "/")).toString();
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
+				File fileEntities = new File(fileEntitiesPath);
+				if (fileEntities.isDirectory()) {
+					for (File fileEntity : fileEntities.listFiles()) {
+						list.add(
+							new StringBuilder(PropertiesFactory.getModelPackage())
+								.append(".").append(fileEntity.getName().replaceAll(".java", ""))
+									.toString()
+						);
+					}
+				}
+				return list;
+			} catch (Exception ex) {
+				return new ArrayList<String>();
+			}
 		}
 	}
 

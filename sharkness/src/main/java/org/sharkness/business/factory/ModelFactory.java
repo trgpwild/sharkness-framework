@@ -72,7 +72,7 @@ public class ModelFactory {
 	public static List<String> getSharknessHibernateEntities() {
 		try {
 			List<String> sharknessEntities = new ArrayList<String>();
-			for (String cls : ScannerClass.getClassNamesFromPackage(PropertiesFactory.getModelPackage())) {
+			for (String cls : ScannerClass.getListNamesOfModelPackage()) {
 				Class<?> klass = Class.forName(cls);
 				if (klass.isAnnotationPresent(Entity.class)) {
 					sharknessEntities.add(cls);
@@ -90,7 +90,7 @@ public class ModelFactory {
 	public static List<Class<Model>> getSharknessClassEntities() {
 		try {
 			List<Class<Model>> sharknessEntities = new ArrayList<Class<Model>>();
-			for (String cls : ScannerClass.getClassNamesFromPackage(PropertiesFactory.getModelPackage())) {
+			for (String cls : ScannerClass.getListNamesOfModelPackage()) {
 				Class<Model> classModel = (Class<Model>) Class.forName(cls);
 				sharknessEntities.add(classModel);
 			}

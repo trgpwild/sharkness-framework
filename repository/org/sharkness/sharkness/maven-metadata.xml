@@ -3,10 +3,11 @@
   <groupId>org.sharkness</groupId>
   <artifactId>sharkness</artifactId>
   <versioning>
-    <release>1.2.5</release>
+    <release>1.2.6</release>
     <versions>
       <version>1.2.5</version>
+      <version>1.2.6</version>
     </versions>
-    <lastUpdated>20120930191202</lastUpdated>
+    <lastUpdated>20121013042829</lastUpdated>
   </versioning>
 </metadata>
