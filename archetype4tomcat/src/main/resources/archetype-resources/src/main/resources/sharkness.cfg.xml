@@ -1,0 +1,32 @@
+#set( $symbol_pound = '#' )
+#set( $symbol_dollar = '$' )
+#set( $symbol_escape = '\' )
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	
+	<entry key="sharkness.application.name">${artifactId}</entry>
+	<entry key="sharkness.application.package">org.${artifactId}</entry>
+	
+	<entry key="sharkness.database.jdbcUrl">jdbc:mysql://localhost/${artifactId}</entry>
+	<entry key="sharkness.database.driverClass">com.mysql.jdbc.Driver</entry>
+	<entry key="sharkness.database.user"></entry>
+	<entry key="sharkness.database.password"></entry>
+	
+	<entry key="sharkness.hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</entry>
+	<entry key="sharkness.hibernate.ddl">update</entry>
+	
+	<entry key="sharkness.system.folder">/system</entry>
+	<entry key="sharkness.system.manager.folder">/manager</entry>
+	
+	<entry key="sharkness.page.default">/index.jsf</entry>
+	<entry key="sharkness.page.login">/login.jsf</entry>
+	<entry key="sharkness.page.access.denied">/login.jsf?denied=true</entry>
+	<entry key="sharkness.page.auth.failure">/login.jsf?erro=true</entry>
+
+	<entry key="sharkness.role.admin.value">ROLE_ADMIN</entry>
+	<entry key="sharkness.role.remote.value">ROLE_APPLICATION</entry>
+	
+	<entry key="sharkness.remote.service.folder">/service</entry>
+	
+</properties>
