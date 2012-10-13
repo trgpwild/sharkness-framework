@@ -6,9 +6,6 @@
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/webapp"/>
-        <dependent-module archiveName="sharkness-1.2.5.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/sharkness/sharkness">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
         <property name="java-output-path" value="/concept/target/classes"/>
         <property name="context-root" value="concept"/>
     </wb-module>
