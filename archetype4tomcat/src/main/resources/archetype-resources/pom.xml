@@ -305,7 +305,7 @@
 
 	<build>
 
-		<finalName>blank</finalName>
+		<finalName>${artifactId}</finalName>
 
 		<plugins>
 

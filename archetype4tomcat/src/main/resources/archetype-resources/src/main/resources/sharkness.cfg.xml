@@ -6,7 +6,7 @@
 <properties>
 	
 	<entry key="sharkness.application.name">${artifactId}</entry>
-	<entry key="sharkness.application.package">org.${artifactId}</entry>
+	<entry key="sharkness.application.package">${groupId}</entry>
 	
 	<entry key="sharkness.database.jdbcUrl">jdbc:mysql://localhost/${artifactId}</entry>
 	<entry key="sharkness.database.driverClass">com.mysql.jdbc.Driver</entry>
