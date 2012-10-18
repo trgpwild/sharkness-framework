@@ -16,10 +16,10 @@ import org.apache.maven.project.MavenProject;
 
 /**
  * @requiresDependencyResolution
- * @goal commands
+ * @goal exec
  */
 @SuppressWarnings("unchecked")
-public class MainMojo extends AbstractMojo {
+public class ExecMojo extends AbstractMojo {
 
 	/**
      * @parameter expression="${project}"
@@ -27,6 +27,11 @@ public class MainMojo extends AbstractMojo {
      * @readonly
      */
 	private MavenProject project;
+	
+	/**
+     * @parameter expression="${f}"
+     */
+	private String parameter;
 	
 	ClassLoader classLoader;
 
@@ -38,15 +43,29 @@ public class MainMojo extends AbstractMojo {
 			
 			Class<?> cls = getClassLoader().loadClass("org.sharkness.artifacts.generate.SharknessGenerator");
 			
+			boolean notFounded = true;
+			
 			for (Method m : cls.getMethods()) {
 				
 				if (m.isAnnotationPresent((Class<? extends Annotation>) an)) {
 					
-					System.out.println(new StringBuilder("sharkness> ").append(m.getName()).toString());
+					if (parameter != null && parameter.length() > 0) {
+						
+						if (m.getName().equalsIgnoreCase(parameter)) {
+							
+							notFounded = false;
+							
+							m.invoke(cls.newInstance(), new Object[]{});
+							
+						}
+
+					}
 					
 				}
 				
 			}
+			
+			if (notFounded) throw new Exception();
 			
 		} catch (Exception e) {
 			System.exit(1);
@@ -55,10 +74,10 @@ public class MainMojo extends AbstractMojo {
 	}
 
 	protected ClassLoader getClassLoader() throws Exception {
-		synchronized (MainMojo.class) {
+		synchronized (ExecMojo.class) {
 			if (classLoader != null) return classLoader;
 		}
-		synchronized (MainMojo.class) {
+		synchronized (ExecMojo.class) {
 			List<URL> urls = new ArrayList<URL>();
 			for (Object object : project.getDependencyArtifacts()) {
 				DefaultArtifact artifact = (DefaultArtifact) object;
