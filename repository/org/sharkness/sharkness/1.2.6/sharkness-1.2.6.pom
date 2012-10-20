@@ -104,7 +104,7 @@
 		<repository>
 			<id>org.sharkness</id>
 			<name>Sharkness Repository</name>
-			<url>file:///Users/thiagorobertogasparpinto/Documents/workspace/sharkness-framework/repository</url>
+			<url>file:///home/trgp/git/sharkness-framework/repository</url>
 		</repository>
 	</distributionManagement>
 </project>

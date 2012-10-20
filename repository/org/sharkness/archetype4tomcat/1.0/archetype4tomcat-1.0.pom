@@ -36,7 +36,7 @@
 		<repository>
 			<id>archetype4tomcat</id>
 			<name>Sharkness Archetype for Tomcat Repository</name>
-			<url>file:///Users/thiagorobertogasparpinto/Documents/workspace/sharkness-framework/repository</url>
+			<url>file:///home/trgp/git/sharkness-framework/repository</url>
 		</repository>
 	</distributionManagement>
 
