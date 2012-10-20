@@ -11,7 +11,7 @@
 		<h:form prependId="false">
 			<p align="right" style="margin: 0px;">
 				<p:commandButton actionListener="#\{${model?uncap_first}Controller.prepareAddModel\}"
-					value="#\{i18n['model.${model?uncap_first}.table.new']\}" update="${model?uncap_first}Form" oncomplete="dialogGer${model}.show()" />
+					value="#\{i18n['model.${model?uncap_first}.table.new']\}" update="table,${model?uncap_first}Form" oncomplete="dialogGer${model}.show()" />
 			</p><hr/>
 			<p:dataTable id="table" var="${model?uncap_first}" value="#\{${model?uncap_first}Controller.listDataModel\}"
 				paginator="true" rows="10" paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}">
@@ -36,7 +36,7 @@
 				<p:commandButton id="decline" value="#\{i18n['global.no.label']\}" onclick="deleteConfirm.hide()" type="button" /> 
 			</p:confirmDialog>
 		</h:form>
-		<p:dialog header="#\{i18n['model.${model?uncap_first}.form.title']\}" widgetVar="dialogGer${model}" resizable="false" modal="true" showEffect="fade">
+		<p:dialog header="#\{i18n['model.${model?uncap_first}.form.title']\}" widgetVar="dialogGer${model}" resizable="false" closable="false" modal="true" showEffect="fade">
 			<h:form prependId="false">
 				<h:panelGrid id="${model?uncap_first}Form" columns="3" style="margin-bottom:10px">
 					<#list tags as tag>
@@ -45,9 +45,11 @@
 					<p:message for="${tag.property}" display="icon"/>
 					</#list>
 				</h:panelGrid>
-				<h:panelGrid>
+				<h:panelGrid columns="2">
 					<p:commandButton update="table,messages,${model?uncap_first}Form" value="#\{i18n['global.table.save']\}"
 						actionListener="#\{${model?uncap_first}Controller.saveModel\}"/>
+					<p:commandButton update="table" value="#{i18n['global.table.cancel']}"
+						oncomplete="dialogGer${model}.hide()"/>
 				</h:panelGrid>
 			</h:form>
 		</p:dialog>

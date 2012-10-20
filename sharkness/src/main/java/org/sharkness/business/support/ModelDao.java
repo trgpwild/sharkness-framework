@@ -87,6 +87,7 @@ public class ModelDao<IdType, T> implements DaoComponent {
 	public Integer getSizePagination(final Map<String,String> filters, Locale locale) {
 		Criteria c = getSession().createCriteria(getObjClass());
 		c.setProjection(Projections.rowCount());
+		c.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 		c = getHibernateCriteriaHelper().setFilters(filters, c, locale);
 		return Integer.parseInt(c.uniqueResult().toString());
 	}
