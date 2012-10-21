@@ -48,7 +48,7 @@
 				<h:panelGrid columns="2">
 					<p:commandButton update="table,messages,${model?uncap_first}Form" value="#\{i18n['global.table.save']\}"
 						actionListener="#\{${model?uncap_first}Controller.saveModel\}"/>
-					<p:commandButton update="table" value="#{i18n['global.table.cancel']}"
+					<p:commandButton update="table" value="#\{i18n['global.table.cancel']}"
 						oncomplete="dialogGer${model}.hide()"/>
 				</h:panelGrid>
 			</h:form>

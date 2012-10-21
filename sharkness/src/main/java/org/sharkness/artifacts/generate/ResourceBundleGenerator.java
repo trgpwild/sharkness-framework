@@ -44,7 +44,7 @@ public class ResourceBundleGenerator extends BundleGenerator {
 		update = updateProperty("global.table.edit","Edit", update, old);
 		update = updateProperty("global.table.delete","Delete", update, old);
 		update = updateProperty("global.table.save","Save", update, old);
-		update = updateProperty("global.table.cancel","Cancel", update, old);
+		update = updateProperty("global.table.cancel","Close", update, old);
 		update = updateProperty("global.manager.label","Manager", update, old);
 		update = updateProperty("global.exit.label","Exit", update, old);
 		update = updateProperty("global.confirmation.delete","Do you really want to delete this?", update, old);
