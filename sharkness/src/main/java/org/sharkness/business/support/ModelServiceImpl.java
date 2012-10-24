@@ -5,13 +5,14 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.sharkness.business.entity.Model;
 import org.sharkness.business.factory.ModelFactory;
 import org.sharkness.jsf.support.SortOrder;
 import org.springframework.web.context.ContextLoader;
 import org.springframework.web.context.WebApplicationContext;
 
 @SuppressWarnings("serial")
-public class ModelServiceImpl<IdType extends Serializable, T, Dao extends ModelDao<IdType, T>> implements ModelService<IdType, T> {
+public class ModelServiceImpl<IdType extends Serializable, T extends Model<IdType>, Dao extends ModelDao<IdType, T>> implements ModelService<IdType, T> {
 
 	private Dao dao;
 	

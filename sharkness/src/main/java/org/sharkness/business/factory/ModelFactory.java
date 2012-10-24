@@ -22,7 +22,7 @@ public class ModelFactory {
 		return userClassName;
 	}
 	
-	public static <T> Class<T> getClass(Component componentCaller) throws ClassNotFoundException, ComponentNotFoundException {
+	public static <T extends Model> Class<T> getClass(Component componentCaller) throws ClassNotFoundException, ComponentNotFoundException {
     	if (componentCaller instanceof ControllerComponent) {
 			return getClassModel(componentCaller);
 		} else if (componentCaller instanceof ConverterComponent) {
@@ -32,7 +32,7 @@ public class ModelFactory {
 		}
     }
 
-	public static <T> Class<T> getClassModel(Component component) {
+	public static <T extends Model> Class<T> getClassModel(Component component) {
     	try {
 			return (Class<T>) Class.forName(getModelCannonicalName(component));
 		} catch (Exception e) {

@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 @ManagedBean
 @RequestScoped
 @SuppressWarnings("serial")
-public class ${model}Controller extends ModelController<${model}, ${model}Service> {
+public class ${model}Controller extends ModelController<${classId}, ${model}, ${model}Service> {
 
 	@Autowired
 	private MessageDigestPasswordEncoder passwordEncoder;

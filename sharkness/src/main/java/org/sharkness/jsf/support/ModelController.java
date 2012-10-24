@@ -1,5 +1,6 @@
 package org.sharkness.jsf.support;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
@@ -17,7 +18,7 @@ import org.springframework.web.context.ContextLoader;
 import org.springframework.web.context.WebApplicationContext;
 
 @SuppressWarnings({"serial","rawtypes","unchecked"})
-public abstract class ModelController<T extends Model, Service extends ModelService> extends SimpleController implements ControllerComponent {
+public abstract class ModelController<IdType extends Serializable, T extends Model<IdType>, Service extends ModelService> extends SimpleController implements ControllerComponent {
 
 	private static final long serialVersionUID = 1L;
 
@@ -108,18 +109,11 @@ public abstract class ModelController<T extends Model, Service extends ModelServ
 
 	public String deleteModel() throws Exception {
 		try {
-			getModelService().delete(model);
+			getModelService().delete(model.getId());
 		} catch (DataIntegrityViolationException e) {
 			message(I18n.get("global.delete.dataIntegrityViolationException"));
 		} catch (Exception e) {
-			Throwable t = e.getCause();
-			String err = "";
-			if (t != null) {
-				if (t.getLocalizedMessage() != null) {
-					err = t.getLocalizedMessage();
-				}
-			}
-			message(I18n.get("global.delete.exception").add(" ERR: ").add(err));
+			message(I18n.get("global.delete.exception").add(" ERR: ").add(e.getMessage()));
 		}
 		return "index";
 	}

@@ -10,6 +10,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
+import org.sharkness.business.entity.Model;
 import org.sharkness.business.factory.ModelFactory;
 import org.sharkness.helper.HibernateCriteriaHelper;
 import org.sharkness.jsf.support.SortOrder;
@@ -17,7 +18,7 @@ import org.sharkness.web.component.DaoComponent;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @SuppressWarnings({ "unchecked", "serial" })
-public class ModelDao<IdType, T> implements DaoComponent {
+public class ModelDao<IdType, T extends Model<IdType>> implements DaoComponent {
 
 	private Class<T> objClass;
 	
