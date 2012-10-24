@@ -12,6 +12,6 @@ import org.springframework.stereotype.Component;
 @ManagedBean
 @RequestScoped
 @SuppressWarnings("serial")
-public class TarefaController extends ModelController<Tarefa, TarefaService> {
+public class TarefaController extends ModelController<Long, Tarefa, TarefaService> {
 
 }

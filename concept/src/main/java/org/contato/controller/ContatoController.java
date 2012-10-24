@@ -12,6 +12,6 @@ import org.springframework.stereotype.Component;
 @ManagedBean
 @RequestScoped
 @SuppressWarnings("serial")
-public class ContatoController extends ModelController<Contato, ContatoService> {
+public class ContatoController extends ModelController<Long, Contato, ContatoService> {
 
 }

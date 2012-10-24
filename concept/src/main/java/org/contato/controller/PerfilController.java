@@ -12,6 +12,6 @@ import org.springframework.stereotype.Component;
 @ManagedBean
 @RequestScoped
 @SuppressWarnings("serial")
-public class PerfilController extends ModelController<Perfil, PerfilService> {
+public class PerfilController extends ModelController<Long, Perfil, PerfilService> {
 
 }
