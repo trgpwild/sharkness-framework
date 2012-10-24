@@ -26,14 +26,14 @@
 		<property name="serviceInterface" value="org.sharkness.remoting.service.AuthRemoteService"/>
 	</bean>
 		
-	<bean name="/ContatoService" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
-		<property name="service" ref="contatoService"/>
-		<property name="serviceInterface" value="org.contato.service.ContatoService"/>
-	</bean>
-	
 	<bean name="/TarefaService" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
 		<property name="service" ref="tarefaService"/>
 		<property name="serviceInterface" value="org.contato.service.TarefaService"/>
+	</bean>
+	
+	<bean name="/ContatoService" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service" ref="contatoService"/>
+		<property name="serviceInterface" value="org.contato.service.ContatoService"/>
 	</bean>
 	
 	<bean name="/UsuarioService" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
