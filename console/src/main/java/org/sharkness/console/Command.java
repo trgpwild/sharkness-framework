@@ -2,6 +2,7 @@ package org.sharkness.console;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -61,12 +62,7 @@ public class Command {
 			
 		} else if (command.startsWith("exec")) {
 
-			String cmd = new StringBuilder("mvn org.sharkness:generator:")
-				.append(pluginVersion).append(":exec -Df=")
-				.append(Arrays.asList(command.split(Pattern.quote(":"))).get(1))
-					.toString();
-
-			Process pr = rt.exec(cmd);
+			Process pr = rt.exec("mvn compile");
 
 			BufferedReader input = new BufferedReader(new InputStreamReader(pr.getInputStream()));
 
@@ -79,16 +75,41 @@ public class Command {
 
 			if (pr.waitFor() == 0) {
 				
-				System.out.println("sharkness> Yeah! Function executed with success!");
+				String cmd = new StringBuilder("mvn org.sharkness:generator:")
+					.append(pluginVersion).append(":exec -Df=")
+					.append(Arrays.asList(command.split(Pattern.quote(":"))).get(1))
+						.toString();
+	
+				pr = rt.exec(cmd);
+	
+				input = new BufferedReader(new InputStreamReader(pr.getInputStream()));
+	
+				list = new ArrayList<String>();
 				
+				while ((line = input.readLine()) != null) {
+					list.add(new StringBuilder("sharkness> ").append(line).toString());
+				}
+	
+				if (pr.waitFor() == 0) {
+					
+					System.out.println("sharkness> Yeah! Function executed with success!");
+					
+				} else {
+					
+					System.out.println("sharkness> Ops! Someting wrong! Verify the documentation again...");
+					
+					for (String str : list) System.out.println(str);
+					
+				}
+	
 			} else {
 				
-				System.out.println("sharkness> Ops! Someting wrong! Verify the documentation again...");
+				System.out.println("sharkness> Ops! Couldn't compile the application...");
 				
 				for (String str : list) System.out.println(str);
-				
-			}
 
+			}
+			
 		}
 
 	}
@@ -138,13 +159,33 @@ public class Command {
 		
 		if (pr.waitFor() == 0) {
 			
+			System.out.println("sharkness> ********************************************************************************************************************");
+			
 			System.out.println("sharkness> Yeah! The project was created with success! Please enter in directory of application and back to Sharkness Framework");
+
+			System.out.println("sharkness> ********************************************************************************************************************");
+			
+			System.out.println("sharkness>");
+
+			File readme = new File(new StringBuilder(artifactId).append("/README").toString());
+			
+			if (readme.exists()) {
+				
+				BufferedReader in = new BufferedReader(new FileReader(readme));
+	
+				while (in.ready())	System.out.println(new StringBuilder("sharkness> ").append(in.readLine()).toString());
+	
+				in.close();
+				
+			}
 			
 			System.exit(0);
 			
 		} else {
 			
 			System.out.println("sharkness> Ops! Someting wrong! Verify the documentation again...");
+			
+			System.exit(1);
 			
 		}
 
