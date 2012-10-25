@@ -45,6 +45,14 @@ public class ExecMojo extends AbstractMojo {
 			
 			boolean notFounded = true;
 			
+			Method loadPassiveConfigurations = null;
+			for (Method m : cls.getMethods()) {
+				if (m.getName().equalsIgnoreCase("loadPassiveConfigurations")) {
+					loadPassiveConfigurations = m;
+				}
+			}
+			if (loadPassiveConfigurations != null) loadPassiveConfigurations.invoke(cls.newInstance(), new Object[]{});
+			
 			for (Method m : cls.getMethods()) {
 				
 				if (m.isAnnotationPresent((Class<? extends Annotation>) an)) {

@@ -41,7 +41,7 @@ public abstract class BusinessGenerator {
 			
 			boolean isEntity = classModel.isAnnotationPresent(Entity.class);
 			
-			String sourcePath = new StringBuilder("./").append(SharknessGenerator.getSrc()).append("/").toString();
+			String sourcePath = new StringBuilder("./").append(PropertiesFactory.getApplicationDevSrc()).append("/").toString();
 			
 			model = new StringBuilder(
 				model.substring(0, 1).toUpperCase())

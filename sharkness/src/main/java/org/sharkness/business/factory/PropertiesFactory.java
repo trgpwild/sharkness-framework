@@ -81,6 +81,26 @@ public class PropertiesFactory {
 		return new StringBuilder(getApplicationPackage())
 			.append(".").append(subpackage).toString();
 	}
+	
+	private static boolean stringToBoolean(String str) {
+		return str.equals("true") ? true : false;
+	}
+
+	public static boolean getForceCodeGeneration() throws Exception {
+		return stringToBoolean(getPropertyValue("false","sharkness.forceGenerationCode"));
+	}
+
+	public static boolean getToolbarEnabled() throws Exception {
+		return stringToBoolean(getPropertyValue("true","sharkness.toolbarEnabled"));
+	}
+
+	public static boolean getWebXmlEnabled() throws Exception {
+		return stringToBoolean(getPropertyValue("true","sharkness.webXmlEnabled"));
+	}
+
+	public static boolean getJsfConfigEnabled() throws Exception {
+		return stringToBoolean(getPropertyValue("true","sharkness.jsfConfigEnabled"));
+	}
 
 	public static String getApplicationDevSrc() throws Exception {
 		return getPropertyValue("src/main/java", "sharkness.application.dev.src");

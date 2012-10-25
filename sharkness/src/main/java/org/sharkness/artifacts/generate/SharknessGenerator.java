@@ -17,8 +17,6 @@ public class SharknessGenerator extends WebContentGenerator {
 	
 	private static boolean forcegen = false;
 	
-	private static String src;
-	
 	public static void setForcegen(boolean forcegen) {
 		SharknessGenerator.forcegen = forcegen;
 	}
@@ -38,19 +36,14 @@ public class SharknessGenerator extends WebContentGenerator {
 	public static boolean isForcegen() {
 		return forcegen;
 	}
+	
+	public void loadPassiveConfigurations() throws Exception {
+		SharknessGenerator.setForcegen(PropertiesFactory.getForceCodeGeneration());
+		SharknessGenerator.setToolbarEnabled(PropertiesFactory.getToolbarEnabled());
+		SharknessGenerator.setWebXmlEnabled(PropertiesFactory.getWebXmlEnabled());
+		SharknessGenerator.setJsfConfigEnabled(PropertiesFactory.getJsfConfigEnabled());
+	}
 
-	public static void setSrc(String src) {
-		SharknessGenerator.src = src;
-	}
-	
-	public static String getSrc() throws Exception {
-		if (src != null) {
-			return src;
-		} else {
-			return PropertiesFactory.getApplicationDevSrc();
-		}
-	}
-	
 	private static Class<Model> getClassModelBySimpleName(String model) throws ClassNotFoundException, Exception {
 		return (Class<Model>) Class.forName(new StringBuilder(getBaseModelPackage()).append(model).toString());
 	}
