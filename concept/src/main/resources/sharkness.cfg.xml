@@ -34,4 +34,6 @@
 	<entry key="sharkness.webXmlEnabled">false</entry>
 	<entry key="sharkness.jsfConfigEnabled">false</entry>
 	
+	<entry key="sharkness.loggerLevel">ERROR</entry>
+
 </properties>

@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.faces.event.ActionEvent;
 
+import org.apache.log4j.Logger;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 import org.sharkness.business.entity.Model;
@@ -32,6 +33,10 @@ public abstract class ModelController<IdType extends Serializable, T extends Mod
 
 	private boolean editModel = false;
 
+	protected Logger getLogger() {
+		return getModelService().getLogger();
+	}
+	
 	public void setModelService(Service modelService) {
 		this.modelService = modelService;
 	}

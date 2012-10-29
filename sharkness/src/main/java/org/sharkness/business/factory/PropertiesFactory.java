@@ -102,6 +102,10 @@ public class PropertiesFactory {
 		return stringToBoolean(getPropertyValue("true","sharkness.jsfConfigEnabled"));
 	}
 
+	public static String getLoggerLevel() throws Exception {
+		return getPropertyValue("ERROR","sharkness.loggerLevel");
+	}
+
 	public static String getApplicationDevSrc() throws Exception {
 		return getPropertyValue("src/main/java", "sharkness.application.dev.src");
 	}

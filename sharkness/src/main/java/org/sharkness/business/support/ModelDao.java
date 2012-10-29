@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -14,6 +15,7 @@ import org.sharkness.business.entity.Model;
 import org.sharkness.business.factory.ModelFactory;
 import org.sharkness.helper.HibernateCriteriaHelper;
 import org.sharkness.jsf.support.SortOrder;
+import org.sharkness.logging.support.LoggerFactory;
 import org.sharkness.web.component.DaoComponent;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -26,6 +28,10 @@ public class ModelDao<IdType, T extends Model<IdType>> implements DaoComponent {
 	private SessionFactory sessionFactory;
 	
 	private HibernateCriteriaHelper hibernateCriteriaHelper;
+
+	public Logger getLogger() {
+		return LoggerFactory.getLogger();
+	}
 
 	public ModelDao() {
 		this.setObjectClass((Class<T>) ModelFactory.getClassModel(this));
