@@ -9,8 +9,6 @@ Suporte a CRUD, Autenticação com Spring Security e Spring Remote (HttpInvoker)
 
 - Exemplo do arquivo de configuracao sharkness.cfg.xml completo:
 
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
 	
 	<entry key="sharkness.application.name">Test-Artifacts</entry>
