@@ -5,9 +5,11 @@ import java.util.List;
 
 import javax.persistence.Entity;
 
+import org.apache.log4j.Logger;
 import org.sharkness.business.entity.Model;
 import org.sharkness.business.entity.User;
 import org.sharkness.helper.StringHelper;
+import org.sharkness.logging.support.LoggerFactory;
 import org.sharkness.web.component.Component;
 import org.sharkness.web.component.ComponentNotFoundException;
 import org.sharkness.web.component.ControllerComponent;
@@ -18,6 +20,10 @@ public class ModelFactory {
 
 	private static String userClassName;
 	
+	private static Logger getLogger() {
+		return LoggerFactory.getLogger();
+	}
+
 	public static String getUserClassName() {
 		return userClassName;
 	}
@@ -28,7 +34,7 @@ public class ModelFactory {
 		} else if (componentCaller instanceof ConverterComponent) {
 			return getClassModelService(componentCaller);
 		} else {
-			throw new ComponentNotFoundException("O componente nao foi encontrado pela fabrica.");
+			throw new ComponentNotFoundException("The component wasn't found by factory.");
 		}
     }
 
@@ -36,7 +42,7 @@ public class ModelFactory {
     	try {
 			return (Class<T>) Class.forName(getModelCannonicalName(component));
 		} catch (Exception e) {
-			e.printStackTrace();
+			getLogger().error("ModelFactory.getClassModel", e);
 			return null;
 		}
     }
@@ -45,7 +51,7 @@ public class ModelFactory {
     	try {
 			return (Class<T>) Class.forName(getModelServiceCannonicalName(component));
 		} catch (Exception e) {
-			e.printStackTrace();
+			getLogger().error("ModelFactory.getClassModelService", e);
 			return null;
 		}
     }
@@ -54,7 +60,7 @@ public class ModelFactory {
     	try {
 			return (Class<T>) Class.forName(getDaoCannonicalName(component));
 		} catch (Exception e) {
-			e.printStackTrace();
+			getLogger().error("ModelFactory.getClassDao", e);
 			return null;
 		}
     }
@@ -83,6 +89,7 @@ public class ModelFactory {
 			}
 			return sharknessEntities;
 		} catch (Exception e) {
+			getLogger().error("ModelFactory.getSharknessHibernateEntities: No entity was found.");
 			return new ArrayList<String>();
 		}
 	}
@@ -96,6 +103,7 @@ public class ModelFactory {
 			}
 			return sharknessEntities;
 		} catch (Exception e) {
+			getLogger().error("ModelFactory.getSharknessClassEntities: No entity was found.");
 			return new ArrayList<Class<Model>>();
 		}
 	}

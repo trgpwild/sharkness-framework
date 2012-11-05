@@ -1,5 +1,6 @@
 package org.sharkness.helper;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 
@@ -8,7 +9,8 @@ import org.hibernate.metadata.ClassMetadata;
 import org.hibernate.persister.entity.AbstractEntityPersister;
 import org.hibernate.type.Type;
 
-public class HibernateHelper {
+@SuppressWarnings("serial")
+public class HibernateHelper implements Serializable {
 
 	private SessionFactory sessionFactory;
 	

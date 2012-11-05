@@ -26,7 +26,7 @@
 	</servlet-mapping>
 </#if>
 	<session-config>
-		<session-timeout>0</session-timeout>
+		<session-timeout>30</session-timeout>
 	</session-config>
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>

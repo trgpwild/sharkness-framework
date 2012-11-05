@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.sharkness</groupId>
 	<artifactId>sharkness</artifactId>
-	<version>1.2.7</version>
+	<version>1.2.8</version>
 	<name>sharkness</name>
 	<description>Framework de apoio a criação de aplicações com gerador de código-fonte. Baseada em spring framework, hibernate, primefaces e maven.</description>
 	<dependencies>

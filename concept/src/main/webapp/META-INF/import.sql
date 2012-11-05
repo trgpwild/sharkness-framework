@@ -6,3 +6,6 @@ INSERT INTO usuario (id,login,senha,email,ativo,tentativas_login) VALUES (2,'use
 
 INSERT INTO usuario_perfil (id_perfil,id_usuario) VALUES (1,1);
 INSERT INTO usuario_perfil (id_perfil,id_usuario) VALUES (2,2);
+
+INSERT INTO contato (id,nome,endereco) VALUES (1,'teste1','endereco1');
+INSERT INTO contato (id,nome,endereco) VALUES (2,'teste2','endereco2');

@@ -11,7 +11,7 @@
 		<h:form prependId="false">
 			<p align="right" style="margin: 0px;">
 				<p:commandButton actionListener="#{contatoController.prepareAddModel}"
-					value="#{i18n['model.contato.table.new']}" update="contatoForm" oncomplete="dialogGerContato.show()" />
+					value="#{i18n['model.contato.table.new']}" update="table,contatoForm" oncomplete="dialogGerContato.show()" />
 			</p><hr/>
 			<p:dataTable id="table" var="contato" value="#{contatoController.listDataModel}"
 				paginator="true" rows="10" paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}">
@@ -37,7 +37,7 @@
 				<p:commandButton id="decline" value="#{i18n['global.no.label']}" onclick="deleteConfirm.hide()" type="button" /> 
 			</p:confirmDialog>
 		</h:form>
-		<p:dialog header="#{i18n['model.contato.form.title']}" widgetVar="dialogGerContato" resizable="false" modal="true" showEffect="fade">
+		<p:dialog header="#{i18n['model.contato.form.title']}" widgetVar="dialogGerContato" resizable="false" closable="false" modal="true" showEffect="fade">
 			<h:form prependId="false">
 				<h:panelGrid id="contatoForm" columns="3" style="margin-bottom:10px">
 					<h:outputLabel for="nome" value="#{i18n['model.contato.property.nome']}"/>
@@ -47,9 +47,11 @@
 					<p:inputText id="endereco" value="#{contatoController.model.endereco}" label="#{i18n['model.contato.property.endereco']}"/>
 					<p:message for="endereco" display="icon"/>
 				</h:panelGrid>
-				<h:panelGrid>
+				<h:panelGrid columns="2">
 					<p:commandButton update="table,messages,contatoForm" value="#{i18n['global.table.save']}"
 						actionListener="#{contatoController.saveModel}"/>
+					<p:commandButton update="table" value="#{i18n['global.table.cancel']}"
+						oncomplete="dialogGerContato.hide()"/>
 				</h:panelGrid>
 			</h:form>
 		</p:dialog>

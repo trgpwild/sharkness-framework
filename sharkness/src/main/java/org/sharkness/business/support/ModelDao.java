@@ -91,7 +91,7 @@ public class ModelDao<IdType, T extends Model<IdType>> implements DaoComponent {
 		return (T)getSession().get(getObjClass(), (Serializable) id);
 	}
 	
-	public Integer getSizePagination(final Map<String,String> filters, Locale locale) {
+	public Integer getSizePagination(final Map<String,String> filters, Locale locale) throws Exception {
 		Criteria c = getSession().createCriteria(getObjClass());
 		c.setProjection(Projections.rowCount());
 		c.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
@@ -99,7 +99,7 @@ public class ModelDao<IdType, T extends Model<IdType>> implements DaoComponent {
 		return Integer.parseInt(c.uniqueResult().toString());
 	}
 
-	public List<T> getListPagination(final int first, final int pageSize, final String sortField, final SortOrder sortOrder, final Map<String,String> filters, Locale locale) {
+	public List<T> getListPagination(final int first, final int pageSize, final String sortField, final SortOrder sortOrder, final Map<String,String> filters, Locale locale) throws Exception {
 		
 		Criteria c = getSession().createCriteria(getObjClass());
 				

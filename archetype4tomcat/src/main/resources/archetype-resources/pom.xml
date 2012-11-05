@@ -20,7 +20,7 @@
 		<dependency>
 			<groupId>org.sharkness</groupId>
 			<artifactId>sharkness</artifactId>
-			<version>1.2.6</version>
+			<version>1.2.8</version>
 		</dependency>
 
 		<!-- JSF Dependencies -->

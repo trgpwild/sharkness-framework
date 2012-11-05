@@ -11,7 +11,7 @@
 		<h:form prependId="false">
 			<p align="right" style="margin: 0px;">
 				<p:commandButton actionListener="#{perfilController.prepareAddModel}"
-					value="#{i18n['model.perfil.table.new']}" update="perfilForm" oncomplete="dialogGerPerfil.show()" />
+					value="#{i18n['model.perfil.table.new']}" update="table,perfilForm" oncomplete="dialogGerPerfil.show()" />
 			</p><hr/>
 			<p:dataTable id="table" var="perfil" value="#{perfilController.listDataModel}"
 				paginator="true" rows="10" paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}">
@@ -34,16 +34,18 @@
 				<p:commandButton id="decline" value="#{i18n['global.no.label']}" onclick="deleteConfirm.hide()" type="button" /> 
 			</p:confirmDialog>
 		</h:form>
-		<p:dialog header="#{i18n['model.perfil.form.title']}" widgetVar="dialogGerPerfil" resizable="false" modal="true" showEffect="fade">
+		<p:dialog header="#{i18n['model.perfil.form.title']}" widgetVar="dialogGerPerfil" resizable="false" closable="false" modal="true" showEffect="fade">
 			<h:form prependId="false">
 				<h:panelGrid id="perfilForm" columns="3" style="margin-bottom:10px">
 					<h:outputLabel for="authority" value="#{i18n['model.perfil.property.authority']}"/>
 					<p:inputText id="authority" value="#{perfilController.model.authority}" label="#{i18n['model.perfil.property.authority']}"/>
 					<p:message for="authority" display="icon"/>
 				</h:panelGrid>
-				<h:panelGrid>
+				<h:panelGrid columns="2">
 					<p:commandButton update="table,messages,perfilForm" value="#{i18n['global.table.save']}"
 						actionListener="#{perfilController.saveModel}"/>
+					<p:commandButton update="table" value="#{i18n['global.table.cancel']}"
+						oncomplete="dialogGerPerfil.hide()"/>
 				</h:panelGrid>
 			</h:form>
 		</p:dialog>

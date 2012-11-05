@@ -43,15 +43,14 @@ public class I18n {
 	public static String i18n(String resourceBundleName, String resourceBundleKey) {
 		try {
 			Locale locale = FacesContext.getCurrentInstance().getViewRoot().getLocale();
-			ResourceBundle bundle = ResourceBundle.getBundle(resourceBundleName, locale, 
-					getCurrentLoader(resourceBundleName));
+			ResourceBundle bundle = ResourceBundle.getBundle(resourceBundleName, locale, getCurrentLoader(resourceBundleName));
 			return bundle.getString(resourceBundleKey);
 		} catch (Exception e) {
 			return resourceBundleKey;
 		}
 	}
 	
-	public static ClassLoader getCurrentLoader(Object fallbackClass) {
+	private static ClassLoader getCurrentLoader(Object fallbackClass) {
 		ClassLoader loader = Thread.currentThread().getContextClassLoader();
 		if (loader == null) loader = fallbackClass.getClass().getClassLoader();
 		return loader;

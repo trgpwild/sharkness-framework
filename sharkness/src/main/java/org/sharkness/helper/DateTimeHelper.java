@@ -8,11 +8,17 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+import org.apache.log4j.Logger;
+import org.sharkness.logging.support.LoggerFactory;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.format.datetime.DateFormatter;
 
 public class DateTimeHelper {
 
+	private static Logger getLogger() {
+		return LoggerFactory.getLogger();
+	}
+	
 	public static String getDateFormatPattern(Locale locale) {
 		DateFormat formatter = getDateFormat(locale);
 		return ((SimpleDateFormat)formatter).toLocalizedPattern();
@@ -28,6 +34,7 @@ public class DateTimeHelper {
 		try {
 			return new DateFormatter().parse(dateStr, LocaleContextHolder.getLocale());
 		} catch (Exception e) {
+			getLogger().error("DateTimeHelper.parseStringToDate", e);
 			return null;
 		}
 	}

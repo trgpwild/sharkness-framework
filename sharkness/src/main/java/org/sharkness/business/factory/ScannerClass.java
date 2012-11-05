@@ -11,7 +11,14 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.regex.Pattern;
 
+import org.apache.log4j.Logger;
+import org.sharkness.logging.support.LoggerFactory;
+
 public class ScannerClass {
+
+	private static Logger getLogger() {
+		return LoggerFactory.getLogger();
+	}
 
 	private static List<String> getClassNamesFromPackage(String packageName) throws IOException {
 	    ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
@@ -50,7 +57,9 @@ public class ScannerClass {
 					.append(actual.getName()).toString().replaceAll("/", ".");
 	            entryName = entryName.substring(0, entryName.lastIndexOf('.'));
         		Class<?> klass = null;
-        		try { klass = Class.forName(entryName); } catch (Exception e) {}
+        		try { klass = Class.forName(entryName); } catch (Exception e) {
+        			getLogger().error("ScannerClass.getClassNamesFromPackage", e);
+        		}
         		if (klass != null) names.add(entryName);
 	        }
 	    }
@@ -75,7 +84,7 @@ public class ScannerClass {
 						.append("/").append(PropertiesFactory.getModelPackage()
 							.replaceAll(Pattern.quote("."), "/")).toString();
 				} catch (Exception ex) {
-					ex.printStackTrace();
+					getLogger().error("ScannerClass.getListNamesOfModelPackage", e);
 				}
 				File fileEntities = new File(fileEntitiesPath);
 				if (fileEntities.isDirectory()) {
@@ -89,6 +98,7 @@ public class ScannerClass {
 				}
 				return list;
 			} catch (Exception ex) {
+				getLogger().error("ScannerClass.getListNamesOfModelPackage", e);
 				return new ArrayList<String>();
 			}
 		}

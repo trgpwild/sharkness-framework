@@ -11,7 +11,7 @@
 		<h:form prependId="false">
 			<p align="right" style="margin: 0px;">
 				<p:commandButton actionListener="#{tarefaController.prepareAddModel}"
-					value="#{i18n['model.tarefa.table.new']}" update="tarefaForm" oncomplete="dialogGerTarefa.show()" />
+					value="#{i18n['model.tarefa.table.new']}" update="table,tarefaForm" oncomplete="dialogGerTarefa.show()" />
 			</p><hr/>
 			<p:dataTable id="table" var="tarefa" value="#{tarefaController.listDataModel}"
 				paginator="true" rows="10" paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}">
@@ -40,7 +40,7 @@
 				<p:commandButton id="decline" value="#{i18n['global.no.label']}" onclick="deleteConfirm.hide()" type="button" /> 
 			</p:confirmDialog>
 		</h:form>
-		<p:dialog header="#{i18n['model.tarefa.form.title']}" widgetVar="dialogGerTarefa" resizable="false" modal="true" showEffect="fade">
+		<p:dialog header="#{i18n['model.tarefa.form.title']}" widgetVar="dialogGerTarefa" resizable="false" closable="false" modal="true" showEffect="fade">
 			<h:form prependId="false">
 				<h:panelGrid id="tarefaForm" columns="3" style="margin-bottom:10px">
 					<h:outputLabel for="nome" value="#{i18n['model.tarefa.property.nome']}"/>
@@ -57,9 +57,11 @@
 					</p:selectOneMenu>
 					<p:message for="usuario" display="icon"/>
 				</h:panelGrid>
-				<h:panelGrid>
+				<h:panelGrid columns="2">
 					<p:commandButton update="table,messages,tarefaForm" value="#{i18n['global.table.save']}"
 						actionListener="#{tarefaController.saveModel}"/>
+					<p:commandButton update="table" value="#{i18n['global.table.cancel']}"
+						oncomplete="dialogGerTarefa.hide()"/>
 				</h:panelGrid>
 			</h:form>
 		</p:dialog>

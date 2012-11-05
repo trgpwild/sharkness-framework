@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
 import org.sharkness.jsf.support.SortOrder;
 import org.sharkness.web.component.ServiceComponent;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,8 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(rollbackFor=Exception.class)
 public interface ModelService<IdType extends Serializable, T> extends ServiceComponent {
 
-	public Logger getLogger();
-	
+	public Class<T> getObjClass();
+
 	public void insert(T obj) throws Exception;
 	
 	public void update(T obj) throws Exception;

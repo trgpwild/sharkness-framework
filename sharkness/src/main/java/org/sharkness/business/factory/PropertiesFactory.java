@@ -11,12 +11,19 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.Properties;
 
+import org.apache.log4j.Logger;
+import org.sharkness.logging.support.LoggerFactory;
+
 import javassist.NotFoundException;
 
 public class PropertiesFactory {
 
 	private static Properties cfg;
 	
+	private static Logger getLogger() {
+		return LoggerFactory.getLogger();
+	}
+
 	private InputStream getSharknessInputStream(String propFileName) {
 		InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream(propFileName);
 		if (inputStream != null) {
@@ -28,8 +35,10 @@ public class PropertiesFactory {
 						.append("/").append(propFileName).toString()
 				));
 			} catch (FileNotFoundException e) {
+				getLogger().error("PropertiesFactory.getSharknessInputStream: sharkness.cfg.xml not found.");
 				return null;
 			} catch (Exception e) {
+				getLogger().error("PropertiesFactory.getSharknessInputStream", e);
 				return null;
 			}
 		}
@@ -42,7 +51,7 @@ public class PropertiesFactory {
 	        	cfg.loadFromXML(new PropertiesFactory()
 	        		.getSharknessInputStream("sharkness.cfg.xml"));
 	        } catch (IOException e) {
-	        	e.printStackTrace();
+				getLogger().error("PropertiesFactory.getSharknessInputStream", e);
 	        }
 		}
 		return cfg;
@@ -100,6 +109,10 @@ public class PropertiesFactory {
 
 	public static boolean getJsfConfigEnabled() throws Exception {
 		return stringToBoolean(getPropertyValue("true","sharkness.jsfConfigEnabled"));
+	}
+
+	public static boolean getLoggerFileEnabled() throws Exception {
+		return stringToBoolean(getPropertyValue("true","sharkness.loggerFileEnabled"));
 	}
 
 	public static String getLoggerLevel() throws Exception {
@@ -219,7 +232,7 @@ public class PropertiesFactory {
 	}
 	
 	public static String getRemoteServiceFolder() throws Exception {
-		return getPropertyValue("sharkness.remote.service.folder");
+		return getPropertyValue("/service", "sharkness.remote.service.folder");
 	}
 
 	public static String getPageDefault() throws Exception {

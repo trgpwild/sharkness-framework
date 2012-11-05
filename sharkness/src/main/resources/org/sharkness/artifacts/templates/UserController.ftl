@@ -1,18 +1,14 @@
 package ${basePackage}.controller;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
 
 import ${basePackage}.entity.${model};
 import ${basePackage}.service.${model}Service;
 import org.sharkness.jsf.support.ModelController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.encoding.MessageDigestPasswordEncoder;
-import org.springframework.stereotype.Component;
 
-@Component
 @ManagedBean
-@RequestScoped
 @SuppressWarnings("serial")
 public class ${model}Controller extends ModelController<${classId}, ${model}, ${model}Service> {
 

@@ -11,7 +11,7 @@
 		<h:form prependId="false">
 			<p align="right" style="margin: 0px;">
 				<p:commandButton actionListener="#{usuarioController.prepareAddModel}"
-					value="#{i18n['model.usuario.table.new']}" update="usuarioForm" oncomplete="dialogGerUsuario.show()" />
+					value="#{i18n['model.usuario.table.new']}" update="table,usuarioForm" oncomplete="dialogGerUsuario.show()" />
 			</p><hr/>
 			<p:dataTable id="table" var="usuario" value="#{usuarioController.listDataModel}"
 				paginator="true" rows="10" paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}">
@@ -40,7 +40,7 @@
 				<p:commandButton id="decline" value="#{i18n['global.no.label']}" onclick="deleteConfirm.hide()" type="button" /> 
 			</p:confirmDialog>
 		</h:form>
-		<p:dialog header="#{i18n['model.usuario.form.title']}" widgetVar="dialogGerUsuario" resizable="false" modal="true" showEffect="fade">
+		<p:dialog header="#{i18n['model.usuario.form.title']}" widgetVar="dialogGerUsuario" resizable="false" closable="false" modal="true" showEffect="fade">
 			<h:form prependId="false">
 				<h:panelGrid id="usuarioForm" columns="3" style="margin-bottom:10px">
 					<h:outputLabel for="username" value="#{i18n['model.usuario.property.username']}"/>
@@ -65,9 +65,11 @@
 					</p:selectManyMenu>
 					<p:message for="roles" display="icon"/>
 				</h:panelGrid>
-				<h:panelGrid>
+				<h:panelGrid columns="2">
 					<p:commandButton update="table,messages,usuarioForm" value="#{i18n['global.table.save']}"
 						actionListener="#{usuarioController.saveModel}"/>
+					<p:commandButton update="table" value="#{i18n['global.table.cancel']}"
+						oncomplete="dialogGerUsuario.hide()"/>
 				</h:panelGrid>
 			</h:form>
 		</p:dialog>
