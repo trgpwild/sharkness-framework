@@ -1,10 +1,11 @@
 package org.sharkness.jsf.support;
 
 import java.io.Serializable;
+import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
 
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 
 import org.apache.log4j.Logger;
@@ -16,11 +17,10 @@ import org.sharkness.business.support.ModelService;
 import org.sharkness.helper.I18n;
 import org.sharkness.logging.support.LoggerFactory;
 import org.sharkness.web.component.ControllerComponent;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.web.context.ContextLoader;
-import org.springframework.web.context.WebApplicationContext;
 
-@SessionScoped
+@ViewScoped
 @SuppressWarnings({"serial","rawtypes","unchecked"})
 public abstract class ModelController<IdType extends Serializable, T extends Model<IdType>, Service extends ModelService> extends SimpleController implements ControllerComponent {
 
@@ -31,9 +31,7 @@ public abstract class ModelController<IdType extends Serializable, T extends Mod
 	private Class<T> klassModel;
 
 	private LazyDataModel<T> dataModel;
-
-	private boolean editModel = false;
-
+	
 	protected Logger getLogger() {
 		return LoggerFactory.getLogger();
 	}
@@ -46,18 +44,16 @@ public abstract class ModelController<IdType extends Serializable, T extends Mod
 		if (this.modelService == null) setModelService(getModelServiceFromContext());
 		return this.modelService;
 	}
-
+	
 	private Service getModelServiceFromContext() {
 		
 		try {
 			
 			getLogger().info("ModelController.getModelServiceFromContext: Loading...");
 			
-			WebApplicationContext wac = ContextLoader.getCurrentWebApplicationContext();
-			
 			Class<Service> klassService = ModelFactory.getClassModelService(this);
 			
-			Service service = wac.getBean(klassService);
+			Service service = ctx().getBean(klassService);
 			
 			getLogger().info("ModelController.getModelServiceFromContext: Loaded.");
 
@@ -73,6 +69,21 @@ public abstract class ModelController<IdType extends Serializable, T extends Mod
 	
 	}
 
+	public void init() throws Exception {
+		
+		getLogger().info("ModelController.init: Loading...");
+		
+		for (Field f : this.getClass().getDeclaredFields()) {
+			if (f.isAnnotationPresent(Autowired.class)) {
+				if (!f.isAccessible()) f.setAccessible(true);
+				f.set(this, ctx().getBean(f.getType()));
+			}
+		}
+		
+		getLogger().info("ModelController.init: Loaded.");
+		
+	}
+	
 	public ModelController() {
 		
 		try {
@@ -86,6 +97,8 @@ public abstract class ModelController<IdType extends Serializable, T extends Mod
 			model = newInstanceModel();
 			
 			createLazyModel();
+			
+			init();
 			
 			getLogger().info(new StringBuilder("ModelController.constructor[")
 				.append(this.getClass().getSimpleName()).append("]: Loaded.")
@@ -105,6 +118,8 @@ public abstract class ModelController<IdType extends Serializable, T extends Mod
 		
 		this.dataModel = new LazyDataModel<T>() {
 			
+			private List<T> list;
+			
 			@Override
 			public List<T> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, String> filters) {
 			
@@ -114,10 +129,29 @@ public abstract class ModelController<IdType extends Serializable, T extends Mod
 				
 				this.setPageSize(pageSize);
 				
+				this.list = models;
+				
 				return models;
 			
 			}
 		
+			@Override
+			public Object getRowKey(T model) {
+				return model.getId();
+			}
+			
+			@Override
+			public T getRowData(String modelId) {
+
+				for (T obj : list) {
+					if(obj.getId().toString().trim().equals(modelId.trim())){
+						return obj;
+					}
+				}
+				
+				return null;
+			}
+
 		};
 	
 		getLogger().info("ModelController.createLazyModel: Created...");
@@ -156,6 +190,8 @@ public abstract class ModelController<IdType extends Serializable, T extends Mod
 
 		getLogger().info("ModelController.getModel: getting...");
 		
+		if (model == null) model = newInstanceModel();
+		
 		return model;
 	
 	}
@@ -172,35 +208,10 @@ public abstract class ModelController<IdType extends Serializable, T extends Mod
 		
 		getLogger().info("ModelController.prepareAddModel: preparing...");
 
-		refresh();
-		
-		editModel = false;
-		
 		model = newInstanceModel();
+		model.setId(null);
 
 		getLogger().info("ModelController.prepareAddModel: prepared.");
-
-	}
-
-	public void prepareEditModel(ActionEvent actionEvent) {
-
-		getLogger().info("ModelController.prepareEditModel: preparing...");
-
-		refresh();
-		
-		editModel = true;
-		
-		model = dataModel.getRowData();
-	
-		getLogger().info("ModelController.prepareEditModel: prepared.");
-
-	}
-
-	public void selectModel() {
-
-		getLogger().info("ModelController.selectModel: selecting...");
-		
-		setModel(dataModel.getRowData());
 
 	}
 
@@ -289,8 +300,8 @@ public abstract class ModelController<IdType extends Serializable, T extends Mod
 		try {
 
 			boolean saved = false;
-			
-			if (editModel) {
+
+			if (getModel().getId() != null) {
 				
 				saved = editModel(actionEvent);
 			
@@ -314,8 +325,6 @@ public abstract class ModelController<IdType extends Serializable, T extends Mod
 					.append(getModelService().getObjClass().getSimpleName()).append("]: message = ").append(i18n.toString())
 				.toString());
 
-				editModel = true;
-			
 			}
 		
 		} catch (Exception e) {

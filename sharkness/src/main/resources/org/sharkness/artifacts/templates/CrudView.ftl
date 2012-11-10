@@ -10,33 +10,24 @@
 	<ui:define name="content">
 		<h:form prependId="false">
 			<p align="right" style="margin: 0px;">
-				<p:commandButton actionListener="#\{${model?uncap_first}Controller.prepareAddModel\}"
-					value="#\{i18n['model.${model?uncap_first}.table.new']\}" update="table,${model?uncap_first}Form" oncomplete="dialogGer${model}.show()" />
+				<p:commandButton value="#\{i18n['model.${model?uncap_first}.table.new']\}" actionListener="#\{${model?uncap_first}Controller.prepareAddModel}"
+					update="table,${model?uncap_first}Form" oncomplete="dialogGer${model}.show()" />
 			</p><hr/>
-			<p:dataTable id="table" var="${model?uncap_first}" value="#\{${model?uncap_first}Controller.listDataModel\}"
+			<p:dataTable id="table" var="${model?uncap_first}" value="#\{${model?uncap_first}Controller.listDataModel\}" selection="#\{${model?uncap_first}Controller.model}" selectionMode="single"
 				paginator="true" rows="10" paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}">
+				<p:ajax event="rowSelect" update="${model?uncap_first}Form" oncomplete="dialogGer${model}.show()" />
 				<#list listProperties as property>
 				<p:column headerText="#\{i18n['model.${model?uncap_first}.property.${property.label}']\}" id="${property.label}" sortBy="#\{${model?uncap_first}.${property.name}\}" filterBy="#\{${model?uncap_first}.${property.name}\}">  
 					${property.tag}
 				</p:column>
 				</#list>
-				<p:column>
-					<f:facet name="header"><h:outputText value="#\{i18n['global.table.edit']\}"/></f:facet>
-					<p:commandLink value="#\{i18n['global.table.edit']\}" update="${model?uncap_first}Form"
-						actionListener="#\{${model?uncap_first}Controller.prepareEditModel\}"
-						oncomplete="dialogGer${model}.show()" />
-				</p:column>
-				<p:column>
-					<f:facet name="header"><h:outputText value="#\{i18n['global.table.delete']\}"/></f:facet>
-					<p:commandLink actionListener="#\{${model?uncap_first}Controller.selectModel\}" onclick="deleteConfirm.show()" value="#\{i18n['global.table.delete']\}"/>
-				</p:column>
 			</p:dataTable>
 			<p:confirmDialog id="deleteConfirm" message="#\{i18n['global.confirmation.delete']\}" header="#\{i18n['global.table.delete']\}" severity="alert" widgetVar="deleteConfirm">
-				<p:commandButton id="confirm" value="#\{i18n['global.yes.label']\}" update="table,messages" oncomplete="deleteConfirm.hide()" actionListener="#\{${model?uncap_first}Controller.deleteModel\}" />
-				<p:commandButton id="decline" value="#\{i18n['global.no.label']\}" onclick="deleteConfirm.hide()" type="button" /> 
+				<p:commandButton id="confirm" value="#\{i18n['global.yes.label']\}" update="table,messages" oncomplete="deleteConfirm.hide()" actionListener="#\{${model?uncap_first}Controller.deleteModel\}"/>
+				<p:commandButton id="decline" value="#\{i18n['global.no.label']\}" update="table,messages" oncomplete="deleteConfirm.hide()" actionListener="#\{${model?uncap_first}Controller.refresh\}"/> 
 			</p:confirmDialog>
 		</h:form>
-		<p:dialog header="#\{i18n['model.${model?uncap_first}.form.title']\}" widgetVar="dialogGer${model}" resizable="false" closable="false" modal="true" showEffect="fade">
+		<p:dialog header="#\{i18n['model.${model?uncap_first}.form.title']\}" widgetVar="dialogGer${model}" resizable="false" closable="false" modal="false" showEffect="fade">
 			<h:form prependId="false">
 				<h:panelGrid id="${model?uncap_first}Form" columns="3" style="margin-bottom:10px">
 					<#list tags as tag>
@@ -45,11 +36,12 @@
 					<p:message for="${tag.property}" display="icon"/>
 					</#list>
 				</h:panelGrid>
-				<h:panelGrid columns="2">
+				<h:panelGrid columns="3">
 					<p:commandButton update="table,messages,${model?uncap_first}Form" value="#\{i18n['global.table.save']\}"
 						actionListener="#\{${model?uncap_first}Controller.saveModel\}"/>
-					<p:commandButton update="table" value="#\{i18n['global.table.cancel']}"
-						oncomplete="dialogGer${model}.hide()"/>
+					<p:commandButton update="table" value="#\{i18n['global.table.cancel']}" oncomplete="dialogGer${model}.hide()"
+						actionListener="#\{${model?uncap_first}Controller.refresh\}"/>
+					<p:commandButton update="table" value="#\{i18n['global.table.delete']}" oncomplete="dialogGer${model}.hide();deleteConfirm.show()"/>
 				</h:panelGrid>
 			</h:form>
 		</p:dialog>

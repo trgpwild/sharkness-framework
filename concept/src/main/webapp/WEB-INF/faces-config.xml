@@ -13,6 +13,9 @@
 			<var>i18n</var>
 		</resource-bundle>
 	</application>
+	<lifecycle>
+		<phase-listener>org.sharkness.jsf.support.SharknessPhaseListener</phase-listener>
+	</lifecycle>
 	<converter>
 		<converter-id>simpleModelConverter</converter-id>
 		<converter-class>org.sharkness.jsf.support.SimpleModelConverter</converter-class>

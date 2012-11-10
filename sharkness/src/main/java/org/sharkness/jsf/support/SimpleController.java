@@ -16,35 +16,37 @@ import org.sharkness.business.entity.Model;
 import org.sharkness.helper.DateTimeHelper;
 import org.sharkness.helper.I18n;
 import org.sharkness.web.component.ControllerComponent;
+import org.springframework.context.ApplicationContext;
+import org.springframework.web.context.ContextLoader;
 
 @SuppressWarnings({"serial","rawtypes"})
 public abstract class SimpleController implements ControllerComponent {
-
+	
 	public String getLocale() {
 		return DateTimeHelper.getDateFormatPattern(getLocaleContext());
 	}
-
+	
 	protected Locale getLocaleContext() {
-		Locale locale = FacesContext.getCurrentInstance().getViewRoot().getLocale();
+		Locale locale = FacesContext.getCurrentInstance().getExternalContext().getRequestLocale();
 		return locale;
 	}
-
+	
 	protected void message(I18n i18n) {
 		message(i18n, FacesMessage.SEVERITY_INFO);
 	}
-
+	
 	protected void message(I18n i18n, Severity severity) {
 		message(i18n.toString(), severity);
 	}
-
+	
 	protected void message(String summary) {
 		message(summary, FacesMessage.SEVERITY_INFO);
 	}
-
+	
 	protected void message(String summary, Severity severity) {
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(severity, summary, null));
 	}
-
+	
 	protected org.sharkness.jsf.support.SortOrder convertSortOrder(SortOrder sortOrder) {
 		if (sortOrder.toString().equalsIgnoreCase(org.sharkness.jsf.support.SortOrder.ASCENDING.toString())) {
 			return org.sharkness.jsf.support.SortOrder.ASCENDING;
@@ -53,7 +55,7 @@ public abstract class SimpleController implements ControllerComponent {
 		}
 		return org.sharkness.jsf.support.SortOrder.UNSORTED;
 	}
-
+	
 	protected Model getModelFromAjaxEvent(AjaxBehaviorEvent event) {
 		Object objSelect = event.getSource();
 		if (objSelect instanceof ValueHolder) {
@@ -74,5 +76,9 @@ public abstract class SimpleController implements ControllerComponent {
 		context.setViewRoot(viewRoot);
 		context.renderResponse();
 	}
-
+	
+	protected ApplicationContext ctx() {
+		return ContextLoader.getCurrentWebApplicationContext();
+	}
+	
 }

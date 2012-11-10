@@ -29,7 +29,7 @@
 	
 	<entry key="sharkness.remote.service.folder">/service</entry>
 	
-	<entry key="sharkness.forceGenerationCode">false</entry>
+	<entry key="sharkness.forceGenerationCode">true</entry>
 	<entry key="sharkness.toolbarEnabled">false</entry>
 	<entry key="sharkness.webXmlEnabled">false</entry>
 	<entry key="sharkness.jsfConfigEnabled">false</entry>
