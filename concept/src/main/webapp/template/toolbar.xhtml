@@ -14,13 +14,13 @@
 			
 				<p:submenu label="#{i18n['global.manager.label']}" icon="ui-icon ui-icon-document">
 										
-					<p:menuitem value="#{i18n['model.perfil.panel.title']}" url="/system/manager/perfil.jsf" />
+					<p:menuitem value="#{i18n['model.usuario.panel.title']}" url="/system/manager/usuario.jsf" rendered="#{sec:ifAnyGranted('ROLE_ADMIN')}"/>
+					
+					<p:menuitem value="#{i18n['model.perfil.panel.title']}" url="/system/manager/perfil.jsf" rendered="#{sec:ifAnyGranted('ROLE_ADMIN')}"/>
 					
 					<p:menuitem value="#{i18n['model.tarefa.panel.title']}" url="/system/manager/tarefa.jsf" />
 					
 					<p:menuitem value="#{i18n['model.contato.panel.title']}" url="/system/manager/contato.jsf" />
-					
-					<p:menuitem value="#{i18n['model.usuario.panel.title']}" url="/system/manager/usuario.jsf" />
 					
 					<p:menuitem value="#{i18n['global.exit.label']}" url="/j_spring_security_logout" />
 					
