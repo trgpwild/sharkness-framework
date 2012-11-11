@@ -69,7 +69,7 @@ public class ModelServiceImpl<IdType extends Serializable, T extends Model<IdTyp
 		try {
 		
 			getLogger().debug(new StringBuilder("ModelService.list: ")
-				.append(getDao().getObjClass().getSimpleName())
+				.append(this.getClass().getSimpleName())
 			.toString());
 
 			return getDao().list();
@@ -90,7 +90,7 @@ public class ModelServiceImpl<IdType extends Serializable, T extends Model<IdTyp
 		try {
 		
 			getLogger().debug(new StringBuilder("ModelService.insert[")
-				.append(getDao().getObjClass().getSimpleName()).append("](").append(obj).append(")")
+				.append(this.getClass().getSimpleName()).append("](").append(obj).append(")")
 			.toString());
 
 			getDao().insert(obj);
@@ -111,7 +111,7 @@ public class ModelServiceImpl<IdType extends Serializable, T extends Model<IdTyp
 		try {
 			
 			getLogger().debug(new StringBuilder("ModelService.update[")
-				.append(getDao().getObjClass().getSimpleName()).append("](").append(obj).append(")")
+				.append(this.getClass().getSimpleName()).append("](").append(obj).append(")")
 			.toString());
 
 			getDao().update(obj);
@@ -132,7 +132,7 @@ public class ModelServiceImpl<IdType extends Serializable, T extends Model<IdTyp
 		try {
 		
 			getLogger().debug(new StringBuilder("ModelService.delete[")
-				.append(getDao().getObjClass().getSimpleName()).append("](id=").append(id).append(")")
+				.append(this.getClass().getSimpleName()).append("](id=").append(id).append(")")
 			.toString());
 
 			delete(getById(id));
@@ -153,7 +153,7 @@ public class ModelServiceImpl<IdType extends Serializable, T extends Model<IdTyp
 		try {
 		
 			getLogger().debug(new StringBuilder("ModelService.delete[")
-				.append(getDao().getObjClass().getSimpleName()).append("](").append(obj).append(")")
+				.append(this.getClass().getSimpleName()).append("](").append(obj).append(")")
 			.toString());
 
 			getDao().delete(obj);
@@ -174,7 +174,7 @@ public class ModelServiceImpl<IdType extends Serializable, T extends Model<IdTyp
 		try {
 
 			getLogger().debug(new StringBuilder("ModelService.exists[")
-				.append(getDao().getObjClass().getSimpleName()).append("](id=").append(id).append(")")
+				.append(this.getClass().getSimpleName()).append("](id=").append(id).append(")")
 			.toString());
 
 			return (getById(id) != null)? true : false;
@@ -195,7 +195,7 @@ public class ModelServiceImpl<IdType extends Serializable, T extends Model<IdTyp
 		try {
 
 			getLogger().debug(new StringBuilder("ModelService.getById[")
-				.append(getDao().getObjClass().getSimpleName()).append("](id").append(id).append(")")
+				.append(this.getClass().getSimpleName()).append("](id").append(id).append(")")
 			.toString());
 
 			return getDao().getById(id);
@@ -216,7 +216,7 @@ public class ModelServiceImpl<IdType extends Serializable, T extends Model<IdTyp
 		try {
 		
 			getLogger().debug(new StringBuilder("ModelService.getSizePagination[")
-				.append(getDao().getObjClass().getSimpleName()).append("](filters=").append(filters)
+				.append(this.getClass().getSimpleName()).append("](filters=").append(filters)
 				.append(", locale=").append(locale.getDisplayName()).append(")")
 			.toString());
 
@@ -238,7 +238,7 @@ public class ModelServiceImpl<IdType extends Serializable, T extends Model<IdTyp
 		try {
 
 			getLogger().debug(new StringBuilder("ModelService.getListPagination[")
-				.append(getDao().getObjClass().getSimpleName()).append("](filters=").append(filters)
+				.append(this.getClass().getSimpleName()).append("](filters=").append(filters)
 				.append(", first=").append(first).append(", pageSize=").append(pageSize)
 				.append(", sortField=").append(sortField).append(", sortOrder=").append(sortOrder)
 				.append(", locale=").append(locale.getDisplayName()).append(")")
