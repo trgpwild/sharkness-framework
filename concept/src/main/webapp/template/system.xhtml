@@ -13,6 +13,10 @@
 <h:body>
 	<p:growl id="messages" />
 	<ui:include src="/template/toolbar.xhtml" />
+	<p:ajaxStatus onstart="statusDialog.show();" onsuccess="statusDialog.hide();"/>
+	<p:dialog modal="true" widgetVar="statusDialog" header="Status" draggable="false" closable="false">
+		<p:graphicImage value="/img/loading.gif"/>
+	</p:dialog>
 	<p:panel header="#{panelTitle}" footer="Sharkness Framework">
 		<ui:insert name="content"/>
 	</p:panel>

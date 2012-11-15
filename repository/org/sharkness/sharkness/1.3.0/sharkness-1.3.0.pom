@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.sharkness</groupId>
 	<artifactId>sharkness</artifactId>
-	<version>1.2.5</version>
+	<version>1.3.0</version>
 	<name>sharkness</name>
 	<description>Framework de apoio a criação de aplicações com gerador de código-fonte. Baseada em spring framework, hibernate, primefaces e maven.</description>
 	<dependencies>
@@ -91,6 +91,11 @@
 			<artifactId>commons-io</artifactId>
 			<version>1.3.2</version>
 		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.16</version>
+		</dependency>
 	</dependencies>
 	<repositories>
    		<repository>
@@ -104,7 +109,7 @@
 		<repository>
 			<id>org.sharkness</id>
 			<name>Sharkness Repository</name>
-			<url>file:///Users/thiagorobertogasparpinto/Documents/workspace/sharkness-framework/repository</url>
+			<url>file:///home/trgp/git/sharkness-framework/repository</url>
 		</repository>
 	</distributionManagement>
 </project>
