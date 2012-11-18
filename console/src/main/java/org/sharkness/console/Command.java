@@ -142,7 +142,7 @@ public class Command {
 			.append("-DarchetypeVersion=").append(Dependency.archetype4tomcatVersion).append(" ")
 			.append("-DgroupId=").append(groupId).append(" ")
 			.append("-Dversion=").append(version).append(" ")
-			.append("-Dpackage=").append(pack).append(".entity ")
+			.append("-Dpackage=").append(pack).append("entity ")
 			.append("-DartifactId=").append(artifactId)
 		.toString();
 		
@@ -166,7 +166,9 @@ public class Command {
 			System.out.println("sharkness> ********************************************************************************************************************");
 			
 			System.out.println("sharkness>");
-
+			
+			System.out.println("sharkness> You need to configure the src/main/resources/sharkness.cfg.xml with database connection information.");
+			
 			File readme = new File(new StringBuilder(artifactId).append("/README").toString());
 			
 			if (readme.exists()) {

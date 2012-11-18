@@ -1,16 +1,3 @@
-#set( $symbol_pound = '#' )
-#set( $symbol_dollar = '$' )
-#set( $symbol_escape = '\' )
-You need to configure the src/main/resources/sharkness.cfg.xml with database connection information.
-
-To create the database, run this sql command before start the application
-
-CREATE SCHEMA ${artifactId} DEFAULT CHARACTER SET latin1;
-
-After start the application, you will need to create the permissions and users in database:
-
-USE ${artifactId};
-
 INSERT INTO perfil (id_perfil,descricao) VALUES (1,'ROLE_ADMIN');
 INSERT INTO perfil (id_perfil,descricao) VALUES (2,'ROLE_USER');
 

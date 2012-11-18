@@ -8,13 +8,14 @@
 	<entry key="sharkness.application.name">${artifactId}</entry>
 	<entry key="sharkness.application.package">${groupId}</entry>
 	
-	<entry key="sharkness.database.jdbcUrl">jdbc:mysql://localhost/${artifactId}</entry>
-	<entry key="sharkness.database.driverClass">com.mysql.jdbc.Driver</entry>
-	<entry key="sharkness.database.user"></entry>
+	<entry key="sharkness.database.jdbcUrl">jdbc:hsqldb:mem:${artifactId}</entry>
+	<entry key="sharkness.database.driverClass">org.hsqldb.jdbcDriver</entry>
+	<entry key="sharkness.database.user">sa</entry>
 	<entry key="sharkness.database.password"></entry>
-	
-	<entry key="sharkness.hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</entry>
-	<entry key="sharkness.hibernate.ddl">update</entry>
+
+	<entry key="sharkness.hibernate.dialect">org.hibernate.dialect.HSQLDialect</entry>
+	<entry key="sharkness.hibernate.ddl">create-drop</entry>
+	<entry key="sharkness.hibernate:hibernate.hbm2ddl.import_files">/META-INF/import.sql</entry>
 	
 	<entry key="sharkness.system.folder">/system</entry>
 	<entry key="sharkness.system.manager.folder">/manager</entry>
