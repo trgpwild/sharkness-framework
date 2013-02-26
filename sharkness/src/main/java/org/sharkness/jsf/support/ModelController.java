@@ -204,7 +204,7 @@ public abstract class ModelController<IdType extends Serializable, T extends Mod
 
 	}
 	
-	public Boolean getEditMode() {
+	public boolean getEditMode() {
 		return getModel().getId() != null;
 	}
 

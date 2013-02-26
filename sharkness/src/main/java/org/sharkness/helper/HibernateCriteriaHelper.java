@@ -65,25 +65,25 @@ public class HibernateCriteriaHelper implements Serializable {
 					
 					getLogger().debug("HibernateCriteriaHelper.setFilters: propertyType = IntegerType");
 					
-					c.add(Restrictions.like(entry.getKey(), Integer.parseInt(entry.getValue())));
+					c.add(Restrictions.eq(entry.getKey(), Integer.parseInt(entry.getValue())));
 					
 				} else if (propertyType instanceof LongType) {
 						
 					getLogger().debug("HibernateCriteriaHelper.setFilters: propertyType = LongType");
 
-					c.add(Restrictions.like(entry.getKey(), Long.parseLong(entry.getValue())));
+					c.add(Restrictions.eq(entry.getKey(), Long.parseLong(entry.getValue())));
 						
 				} else if (propertyType instanceof BigDecimalType) {
 					
 					getLogger().debug("HibernateCriteriaHelper.setFilters: propertyType = BigDecimalType");
 					
-					c.add(Restrictions.like(entry.getKey(), new BigDecimal(entry.getValue())));
+					c.add(Restrictions.eq(entry.getKey(), new BigDecimal(entry.getValue())));
 						
 				} else if (propertyType instanceof BigIntegerType) {
 					
 					getLogger().debug("HibernateCriteriaHelper.setFilters: propertyType = BigIntegerType");
 
-					c.add(Restrictions.like(entry.getKey(), new BigInteger(entry.getValue())));
+					c.add(Restrictions.eq(entry.getKey(), new BigInteger(entry.getValue())));
 						
 				} else if (propertyType instanceof DateType) {
 					
