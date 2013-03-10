@@ -58,3 +58,13 @@ Suporte a CRUD, Autenticação com Spring Security e Spring Remote (HttpInvoker)
 	<entry key="sharkness.loggerLevel">ERROR</entry>
 
 </properties>
+
+<properties>
+
+sharkness> help
+
+<properties>
+	use esse comando para ajuda
+</properties>
+
+</properties>
