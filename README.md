@@ -57,14 +57,7 @@ Suporte a CRUD, Autenticação com Spring Security e Spring Remote (HttpInvoker)
 	<entry key="sharkness.loggerFileEnabled">true</entry>
 	<entry key="sharkness.loggerLevel">ERROR</entry>
 
-</properties>
 
-<properties>
-
-sharkness> help
-
-<properties>
-	use esse comando para ajuda
-</properties>
+	sharkness> help (use esse comando para ajuda)
 
 </properties>
