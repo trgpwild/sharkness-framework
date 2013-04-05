@@ -76,21 +76,25 @@ public class DownloadSupport {
 			
 		}
 
-		BufferedReader in = new BufferedReader(
-			new FileReader(new StringBuilder(userHomePath).append("/.m2/repository/org/sharkness/")
-					.append(artifactId).append("/maven-metadata-local.xml").toString()));
-
-		String str;
-
-		while (in.ready()) {
-			str = in.readLine();
-			if (str.trim().startsWith("<release>")) {
-				versionLocal = str.replaceAll("<release>", "")
-						.replaceAll("</release>", "").trim();
+		try {
+			
+			BufferedReader in = new BufferedReader(
+				new FileReader(new StringBuilder(userHomePath).append("/.m2/repository/org/sharkness/")
+						.append(artifactId).append("/maven-metadata-local.xml").toString()));
+	
+			String str;
+	
+			while (in.ready()) {
+				str = in.readLine();
+				if (str.trim().startsWith("<release>")) {
+					versionLocal = str.replaceAll("<release>", "")
+							.replaceAll("</release>", "").trim();
+				}
 			}
-		}
+	
+			in.close();
 
-		in.close();
+		} catch (Exception e) {}
 
 		if (online && !versionRemote.equals("0")) {
 

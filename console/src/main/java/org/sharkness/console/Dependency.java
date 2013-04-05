@@ -87,6 +87,7 @@ public class Dependency {
 		return ClassLoader.getSystemClassLoader();
 	}
 	
+	@SuppressWarnings("resource")
 	public static void updatePom() throws Exception {
 		
 		try {
