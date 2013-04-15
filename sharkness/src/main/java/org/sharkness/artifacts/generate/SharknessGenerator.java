@@ -95,6 +95,7 @@ public class SharknessGenerator extends WebContentGenerator {
 		FileWriter fileWriter = new FileWriter(fileComponent);
 		fileWriter.write(content.replaceAll("\\\\", ""));
 		fileWriter.flush();
+		fileWriter.close();
 	}
 
 	@Generator
@@ -221,79 +222,79 @@ public class SharknessGenerator extends WebContentGenerator {
 	
 	@Generator
 	public static void copyTemplateController() throws Exception {
-		TemplateCopy.copyTemplate("Controller.ftl");
-		TemplateCopy.copyTemplate("UserController.ftl");
+		ResourceCopy.template("Controller.ftl");
+		ResourceCopy.template("UserController.ftl");
 	}
 	
 	@Generator
 	public static void copyTemplateConverter() throws Exception {
-		TemplateCopy.copyTemplate("Converter.ftl");
+		ResourceCopy.template("Converter.ftl");
 	}
 	
 	@Generator
 	public static void copyTemplateCrudView() throws Exception {
-		TemplateCopy.copyTemplate("CrudView.ftl");
+		ResourceCopy.template("CrudView.ftl");
 	}
 	
 	@Generator
 	public static void copyTemplateDao() throws Exception {
-		TemplateCopy.copyTemplate("Dao.ftl");
+		ResourceCopy.template("Dao.ftl");
 	}
 	
 	@Generator
 	public static void copyTemplateService() throws Exception {
-		TemplateCopy.copyTemplate("Service.ftl");
-		TemplateCopy.copyTemplate("ServiceImpl.ftl");
+		ResourceCopy.template("Service.ftl");
+		ResourceCopy.template("ServiceImpl.ftl");
 	}
 	
 	@Generator
 	public static void copyTemplateSimpleXhtml() throws Exception {
-		TemplateCopy.copyTemplate("/web/template/simple.xhtml.ftl");
+		ResourceCopy.template("/web/template/simple.xhtml.ftl");
 	}
 	
 	@Generator
 	public static void copyTemplateSystemXhtml() throws Exception {
-		TemplateCopy.copyTemplate("/web/template/system.xhtml.ftl");
+		ResourceCopy.template("/web/template/system.xhtml.ftl");
 	}
 	
 	@Generator
 	public static void copyTemplateToolbarXhtml() throws Exception {
-		TemplateCopy.copyTemplate("/web/template/toolbar.xhtml.ftl");
+		ResourceCopy.template("/web/template/toolbar.xhtml.ftl");
 	}
 	
 	@Generator
 	public static void copyTemplateApplicationContext() throws Exception {
-		TemplateCopy.copyTemplate("/web/web-inf/applicationContext.xml.ftl");
+		ResourceCopy.template("/web/web-inf/applicationContext.xml.ftl");
 	}
 	
 	@Generator
 	public static void copyTemplateServiceServlet() throws Exception {
-		TemplateCopy.copyTemplate("/web/web-inf/service-servlet.xml.ftl");
+		ResourceCopy.template("/web/web-inf/service-servlet.xml.ftl");
 	}
 	
 	@Generator
 	public static void copyTemplateWebXml() throws Exception {
-		TemplateCopy.copyTemplate("/web/web-inf/web.xml.ftl");
+		ResourceCopy.template("/web/web-inf/web.xml.ftl");
 	}
 	
 	@Generator
 	public static void copyContextCore() throws Exception {
-		TemplateCopy.copyContext("core.xml");
+		ResourceCopy.context("core.xml");
 	}
 
 	@Generator
 	public static void copyContextDatabase() throws Exception {
-		TemplateCopy.copyContext("database.xml");
+		ResourceCopy.context("database.xml");
 	}
 
 	@Generator
 	public static void copyContextSecurity() throws Exception {
-		TemplateCopy.copyContext("security.xml");
+		ResourceCopy.context("security.xml");
 	}
 
 	@Generator
 	public static void copyContextSharkness() throws Exception {
-		TemplateCopy.copyContext("sharkness.xml");
+		ResourceCopy.context("sharkness.xml");
 	}
 
 }

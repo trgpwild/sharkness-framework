@@ -35,7 +35,7 @@
 				<h:panelGrid columns="3">
 					<p:commandButton update=":rootform:table,:messages,:dialogform:perfilForm" value="#{i18n['global.table.save']}"
 						actionListener="#{perfilController.saveModel}"/>
-					<p:commandButton update=":rootform:table" value="#{i18n['global.table.cancel']}" oncomplete="dialogGerPerfil.hide()"
+					<p:commandButton update=":rootform:table" value="#{i18n['global.table.cancel']}" oncomplete="dialogGerPerfil.hide()" immediate="true"
 						actionListener="#{perfilController.refresh}"/>
 					<p:commandButton update=":rootform:table" value="#{i18n['global.table.delete']}" oncomplete="dialogGerPerfil.hide();deleteConfirm.show()"/>
 				</h:panelGrid>

@@ -7,13 +7,13 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.sharkness.business.factory.PropertiesFactory;
 
-public class TemplateCopy {
+public class ResourceCopy {
 
-	public static void copyTemplate(String resource) throws IOException, Exception {
+	public static void template(String resource) throws IOException, Exception {
 		copyGeneric("/org/sharkness/artifacts/templates/", resource);
 	}
 
-	public static void copyContext(String resource) throws IOException, Exception {
+	public static void context(String resource) throws IOException, Exception {
 		copyGeneric("/org/sharkness/context/", resource);
 	}
 

@@ -41,7 +41,7 @@
 				<h:panelGrid columns="3">
 					<p:commandButton update=":rootform:table,:messages,:dialogform:contatoForm" value="#{i18n['global.table.save']}"
 						actionListener="#{contatoController.saveModel}"/>
-					<p:commandButton update=":rootform:table" value="#{i18n['global.table.cancel']}" oncomplete="dialogGerContato.hide()"
+					<p:commandButton update=":rootform:table" value="#{i18n['global.table.cancel']}" oncomplete="dialogGerContato.hide()" immediate="true"
 						actionListener="#{contatoController.refresh}"/>
 					<p:commandButton update=":rootform:table" value="#{i18n['global.table.delete']}" oncomplete="dialogGerContato.hide();deleteConfirm.show()"/>
 				</h:panelGrid>

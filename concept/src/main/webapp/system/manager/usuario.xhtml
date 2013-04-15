@@ -59,7 +59,7 @@
 				<h:panelGrid columns="3">
 					<p:commandButton update=":rootform:table,:messages,:dialogform:usuarioForm" value="#{i18n['global.table.save']}"
 						actionListener="#{usuarioController.saveModel}"/>
-					<p:commandButton update=":rootform:table" value="#{i18n['global.table.cancel']}" oncomplete="dialogGerUsuario.hide()"
+					<p:commandButton update=":rootform:table" value="#{i18n['global.table.cancel']}" oncomplete="dialogGerUsuario.hide()" immediate="true"
 						actionListener="#{usuarioController.refresh}"/>
 					<p:commandButton update=":rootform:table" value="#{i18n['global.table.delete']}" oncomplete="dialogGerUsuario.hide();deleteConfirm.show()"/>
 				</h:panelGrid>

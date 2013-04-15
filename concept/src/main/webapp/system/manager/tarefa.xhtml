@@ -51,7 +51,7 @@
 				<h:panelGrid columns="3">
 					<p:commandButton update=":rootform:table,:messages,:dialogform:tarefaForm" value="#{i18n['global.table.save']}"
 						actionListener="#{tarefaController.saveModel}"/>
-					<p:commandButton update=":rootform:table" value="#{i18n['global.table.cancel']}" oncomplete="dialogGerTarefa.hide()"
+					<p:commandButton update=":rootform:table" value="#{i18n['global.table.cancel']}" oncomplete="dialogGerTarefa.hide()" immediate="true"
 						actionListener="#{tarefaController.refresh}"/>
 					<p:commandButton update=":rootform:table" value="#{i18n['global.table.delete']}" oncomplete="dialogGerTarefa.hide();deleteConfirm.show()"/>
 				</h:panelGrid>

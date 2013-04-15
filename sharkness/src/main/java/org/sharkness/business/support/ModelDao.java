@@ -7,13 +7,14 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Projections;
 import org.sharkness.business.entity.Model;
 import org.sharkness.business.factory.ModelFactory;
 import org.sharkness.helper.HibernateCriteriaHelper;
+import org.sharkness.helper.HibernateHelper;
 import org.sharkness.jsf.support.SortOrder;
 import org.sharkness.logging.support.LoggerFactory;
 import org.sharkness.web.component.DaoComponent;
@@ -26,6 +27,8 @@ public class ModelDao<IdType, T extends Model<IdType>> implements DaoComponent {
 	
 	@Autowired
 	private SessionFactory sessionFactory;
+	
+	private HibernateHelper hibernateHelper;
 	
 	private HibernateCriteriaHelper hibernateCriteriaHelper;
 
@@ -46,14 +49,25 @@ public class ModelDao<IdType, T extends Model<IdType>> implements DaoComponent {
 		return sessionFactory.getCurrentSession();
 	}
 	
+	public SessionFactory getSessionFactory() {
+		return sessionFactory;
+	}
+	
+	public void setHibernateHelper(HibernateHelper hibernateHelper) {
+		this.hibernateHelper = hibernateHelper;
+	}
+	
+	public HibernateHelper getHibernateHelper() {
+		if (this.hibernateHelper == null) setHibernateHelper(new HibernateHelper(getSessionFactory()));
+		return hibernateHelper;
+	}
+	
 	protected void setHibernateCriteriaHelper(HibernateCriteriaHelper hibernateCriteriaHelper) {
 		this.hibernateCriteriaHelper = hibernateCriteriaHelper;
 	}
 	
 	protected HibernateCriteriaHelper getHibernateCriteriaHelper() {
-		if (hibernateCriteriaHelper == null) {
-	        this.setHibernateCriteriaHelper(new HibernateCriteriaHelper(sessionFactory,getObjClass()));
-		}
+		if (this.hibernateCriteriaHelper == null) setHibernateCriteriaHelper(new HibernateCriteriaHelper(sessionFactory,getObjClass()));
 		return hibernateCriteriaHelper;
 	}
     
@@ -92,44 +106,46 @@ public class ModelDao<IdType, T extends Model<IdType>> implements DaoComponent {
 	}
 	
 	public Integer getSizePagination(final Map<String,String> filters, Locale locale) throws Exception {
-		Criteria c = getSession().createCriteria(getObjClass());
-		c.setProjection(Projections.rowCount());
-		c.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
-		c = getHibernateCriteriaHelper().setFilters(filters, c, locale);
-		return Integer.parseInt(c.uniqueResult().toString());
+		
+		StringBuilder hql = new StringBuilder("select count(o) from ").append(getObjClass().getSimpleName()).append(" o ");
+		
+		hql = getHibernateHelper().putHqlParameters(getObjClass(), filters, hql);
+		
+		Query query = getSession().createQuery(hql.toString());
+		
+		query.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+		
+		return Integer.parseInt(query.uniqueResult().toString());
+		
 	}
 
 	public List<T> getListPagination(final int first, final int pageSize, final String sortField, final SortOrder sortOrder, final Map<String,String> filters, Locale locale) throws Exception {
 		
-		Criteria c = getSession().createCriteria(getObjClass());
-				
-		c.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
-				
-		c = getHibernateCriteriaHelper().setFilters(filters, c, locale);
-				
-		c.setFirstResult(first);
-				
-		c.setMaxResults(pageSize);
-				
-		if (sortField != null && !sortField.isEmpty()) {
-			 if (sortOrder.equals(SortOrder.DESCENDING)) {
-				 c.addOrder(Order.desc(sortField));
-			 } else {
-				 c.addOrder(Order.asc(sortField));
-			 }
-		} else {
-			String defaultOrderField = getDefaultOrderField();
-			if (defaultOrderField != null) {
-				c.addOrder(Order.asc(defaultOrderField));
+		StringBuilder hql = new StringBuilder("select o from ").append(getObjClass().getSimpleName()).append(" o ");
+		
+		hql = getHibernateHelper().putHqlParameters(getObjClass(), filters, hql);
+		
+		if (sortOrder != null && sortField != null && sortField.length() > 0) {
+			if (sortOrder.equals(SortOrder.ASCENDING)) {
+				hql.append("order by ").append(sortField).append(" asc");
+			} else if (sortOrder.equals(SortOrder.DESCENDING)) {
+				hql.append("order by ").append(sortField).append(" desc");
 			}
+		} else if (getDefaultOrderField() != null && getDefaultOrderField().length() > 0) {
+			hql.append("order by ").append(getDefaultOrderField()).append(" asc");
 		}
 		
-		List<T> list = c.list();
+		Query query = getSession().createQuery(hql.toString());
 		
-		return list;
+		if (first > -1) query.setFirstResult(first);
+		if (pageSize > -1) query.setMaxResults(pageSize);
+
+		query.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+
+		return query.list();
 
 	}
-	
+
 	protected String getDefaultOrderField() {
 		return null;
 	}

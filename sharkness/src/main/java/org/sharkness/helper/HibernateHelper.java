@@ -3,10 +3,13 @@ package org.sharkness.helper;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.metadata.ClassMetadata;
 import org.hibernate.persister.entity.AbstractEntityPersister;
+import org.hibernate.type.IntegerType;
+import org.hibernate.type.LongType;
 import org.hibernate.type.Type;
 
 @SuppressWarnings("serial")
@@ -44,6 +47,37 @@ public class HibernateHelper implements Serializable {
 			}
 		}
 		return null;
+	}
+	
+	public StringBuilder putHqlParameters(Class<?> classModel, final Map<String, String> filters, StringBuilder hql) {
+
+		if (filters != null && filters.size() > 0) {
+
+			hql.append("where ");
+
+			int quantidadeDeParametros = 0;
+			
+			for (Map.Entry<String, String> entry : filters.entrySet()) {
+			
+				String propertyTypeStr = entry.getKey().split("\\.")[0];
+				Type propertyType = getHibernateTypeByNameProperty(classModel, propertyTypeStr);
+				
+				if (quantidadeDeParametros > 0) hql.append("and ");
+				
+				if (propertyType instanceof IntegerType || propertyType instanceof LongType) {
+					hql.append("o.").append(entry.getKey()).append(" = ").append(entry.getValue()).append(" ");
+				} else {
+					hql.append("o.").append(entry.getKey()).append(" like '%").append(entry.getValue()).append("%' ");
+				}
+				
+				quantidadeDeParametros++;
+			
+			}
+		
+		}
+		
+		return hql;
+		
 	}
 
 }
